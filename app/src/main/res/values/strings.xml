@@ -1,3 +1,50 @@
 <resources>
-    <string name="app_name">csci4100-finalproject</string>
+    <!-- App name, resources -->
+    <string name="app_name">Tower Defense</string>
+
+    <!-- Main menu -->
+    <string name="startButton">Start Game</string>
+    <string name="instructionsButton">Instructions</string>
+    <string name="highScoreButton">High Scores</string>
+    <string name="exitButton">Exit Game</string>
+
+    <!-- Instructions Screen -->
+    <string name="instructionsTitle">Instructions</string>
+    <string name="instructionsContent">
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+        Here are the instructions... Soon to come with pictures and such
+    </string>
+    <string name="back_InstructionsScreen">Back</string>
+
+    <!-- High Score Screen -->
+    <string name="highscoreTitle">High Scores</string>
+    <string name="back_HighScoreScreen">Back</string>
 </resources>

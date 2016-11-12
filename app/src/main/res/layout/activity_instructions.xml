@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_instructions"
+    tools:context="net.uoit.mcjb.csci4100_finalproject.Instructions"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <!-- Title Label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/title_InstructionsScreen"
+        android:text="@string/instructionsTitle"
+        android:textSize="25dp"/>
+
+    <!-- Back Button -->
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/back_InstructionsScreen"
+        android:text="@string/back_InstructionsScreen"/>
+
+
+    <!-- Content for the instructions -->
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/title_InstructionsScreen"
+        android:layout_above="@id/back_InstructionsScreen"
+        android:layout_marginTop="10dp"
+        android:id="@+id/scrollview_InstructionsScreen">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="18dp"
+            android:id="@+id/content_InstructionsScreen">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/instructions_InstructionsScreen"
+                android:text="@string/instructionsContent"/>
+
+        </RelativeLayout>
+    </ScrollView>
+    
+
+</RelativeLayout>
+

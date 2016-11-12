@@ -9,8 +9,57 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.uoit.mcjb.csci4100_finalproject.MainActivity">
 
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/logo_MainScreen"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/logo_MainScreen"
+        android:layout_marginTop="40dp"
+        android:id="@+id/gameTitle_MainScreen"
+        android:text="@string/app_name"
+        android:textSize="25dp"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:layout_below="@id/gameTitle_MainScreen"
+        android:id="@+id/startGame_MainScreen"
+        android:text="@string/startButton"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/startGame_MainScreen"
+        android:id="@+id/instruction_MainScreen"
+        android:text="@string/instructionsButton"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/instruction_MainScreen"
+        android:id="@+id/highscores_MainScreen"
+        android:text="@string/highScoreButton"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/highscores_MainScreen"
+        android:id="@+id/exit_MainScreen"
+        android:text="@string/exitButton"/>
 </RelativeLayout>
