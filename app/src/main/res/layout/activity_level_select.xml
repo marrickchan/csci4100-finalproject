@@ -6,4 +6,21 @@
     android:layout_height="match_parent"
     tools:context="net.uoit.mcjb.csci4100_finalproject.LevelSelect">
 
+    <Button
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="35dp"
+    android:id="@+id/w1s1Select"
+    android:text="@string/w1s1"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/w1s1Select"
+        android:id="@+id/w1s2Select"
+        android:text="@string/w1s2"/>
+
 </RelativeLayout>
