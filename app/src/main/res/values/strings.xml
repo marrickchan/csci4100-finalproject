@@ -8,6 +8,16 @@
     <string name="highScoreButton">High Scores</string>
     <string name="exitButton">Exit Game</string>
 
+    <!-- Level select Screen -->
+    <string name="w1s1">World 1 - Stage 1</string>
+    <string name="w1s2">World 1 - Stage 2</string>
+    <string name="w1s3">World 1 - Stage 3</string>
+
+
+
+
+
+
     <!-- Instructions Screen -->
     <string name="instructionsTitle">Instructions</string>
     <string name="instructionsContent">

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_world1_stage1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="net.uoit.mcjb.csci4100_finalproject.World1Stage1">
+
+    <!-- Resources -->
+    <TextView
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/infoBar"/>
+    
+    
+    <!-- First Row Towers -->
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="70dp"
+        android:layout_below="@id/infoBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/w1s1Tower1"/>
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="70dp"
+        android:layout_below="@id/infoBar"
+        android:layout_alignParentEnd="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/w1s1Tower2"/>
+
+    <!-- Second Row Towers -->
+    <ImageView
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_below="@id/w1s1Tower1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/w1s1Tower3"/>
+    <ImageView
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_below="@id/w1s1Tower2"
+        android:layout_alignParentEnd="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/w1s1Tower4"/>
+
+    <!-- Third Row Towers -->
+    <ImageView
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_below="@id/w1s1Tower3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/w1s1Tower5"/>
+    <ImageView
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_below="@id/w1s1Tower4"
+        android:layout_alignParentEnd="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/w1s1Tower6"/>
+
+    <!-- Fourth Row Towers -->
+    <ImageView
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_below="@id/w1s1Tower5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/w1s1Tower7"/>
+    <ImageView
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_below="@id/w1s1Tower6"
+        android:layout_alignParentEnd="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/w1s1Tower8"/>
+
+
+</RelativeLayout>

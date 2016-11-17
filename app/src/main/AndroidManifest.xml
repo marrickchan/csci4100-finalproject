@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".LevelSelect" />
         <activity android:name=".Instructions" />
-        <activity android:name=".HighScores"></activity>
+        <activity android:name=".HighScores" />
+        <activity android:name=".World1Stage1"></activity>
     </application>
 
 </manifest>
