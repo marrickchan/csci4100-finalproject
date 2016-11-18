@@ -32,7 +32,7 @@ public class FireTower {
             public void run() {
             //Called each time when 1000 milliseconds (1 second) (the period parameter)
                 if(canAtk = true) {
-                    attack();
+                    checkCollision();
                 }
             }
         },
@@ -66,6 +66,8 @@ public class FireTower {
 
     private boolean checkCollision(){
         // Check collision
+        // If collided, attack
+        attack();
 
 
 
