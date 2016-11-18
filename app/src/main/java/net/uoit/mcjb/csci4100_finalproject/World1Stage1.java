@@ -17,6 +17,15 @@ public class World1Stage1 extends AppCompatActivity {
     final private int STAGE_CODE = 0101;
     private int lives = 10;
     private int gold = 150;
+    private boolean towerSlot1 = true;
+    private boolean towerSlot2 = true;
+    private boolean towerSlot3 = true;
+    private boolean towerSlot4 = true;
+    private boolean towerSlot5 = true;
+    private boolean towerSlot6 = true;
+    private boolean towerSlot7 = true;
+    private boolean towerSlot8 = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +66,16 @@ public class World1Stage1 extends AppCompatActivity {
                 // Creating Tower
                 // TODO:
                 // Create a window that will let user choose tower to build
-                int chosenTower = chooseTower();
-                if(chosenTower == FIRE_TOWER){
-                    ImageView tower1 = (ImageView)findViewById(R.id.w1s1Tower1);
-                    FireTower t1 = new FireTower(tower1.getX(), tower1.getY(), tower1);
-                } else {
+                if(towerSlot1) {
+                    towerSlot1 = false;
+                    int chosenTower = chooseTower();
+                    if (chosenTower == FIRE_TOWER) {
+                        RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_world1_stage1);
+                        ImageView tower1 = (ImageView) findViewById(R.id.w1s1Tower1);
+                        FireTower t1 = new FireTower(tower1.getX(), tower1.getY(), tower1, rl);
+                    } else {
 
+                    }
                 }
 
             }
