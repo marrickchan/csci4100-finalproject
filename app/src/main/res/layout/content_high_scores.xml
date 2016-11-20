@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_high_scores"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="net.uoit.mcjb.csci4100_finalproject.HighScores"
+    tools:showIn="@layout/activity_high_scores" >
+
+    <!-- Title Label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/title_HighScoreScreen"
+        android:text="@string/highscoreTitle"
+        android:textSize="25sp"/>
+
+    <!-- Back Button -->
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/back_HighScoreScreen"
+        android:text="@string/back_HighScoreScreen"/>
+
+    <fragment
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/title_HighScoreScreen"
+        android:id="@+id/fragment_HighScoreScreen"
+        android:name="net.uoit.mcjb.csci4100_finalproject.HighScoresFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_above="@id/back_HighScoreScreen"/>
+
+
+
+</RelativeLayout>
