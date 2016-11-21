@@ -32,10 +32,10 @@ public class ScoreAdapter extends ArrayAdapter<Score> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
 
-           // convertView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_high_score_list, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_high_scores, parent, false);
 
-         //   viewHolder.name = (TextView) convertView.findViewById(R.id.listItemName);
-          //  viewHolder.score = (TextView) convertView.findViewById(R.id.listItemScore);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.listItemName_HighScoreScreen);
+            viewHolder.score = (TextView) convertView.findViewById(R.id.listItemScore_HighScoreScreen);
 
             convertView.setTag(viewHolder);
         } else  {
