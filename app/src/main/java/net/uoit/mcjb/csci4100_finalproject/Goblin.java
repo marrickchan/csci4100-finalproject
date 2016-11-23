@@ -33,8 +33,8 @@ public class Goblin {
     }
 
     public boolean kill(){
-        //iv.setY(5000.0f);
-        //iv.setX(5000.0f);
+        iv.setY(5000.0f);
+        iv.setX(5000.0f);
         return true;
     }
 
