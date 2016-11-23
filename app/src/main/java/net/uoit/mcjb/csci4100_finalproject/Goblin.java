@@ -29,8 +29,9 @@ public class Goblin {
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(30, 0, 0, 0);
         screen.addView(iv, lp);
+    }
 
-
+    public void start(){
         // Set the timer to walk through the stage
         Timer t = new Timer();
         t.scheduleAtFixedRate(new TimerTask() {
@@ -39,14 +40,18 @@ public class Goblin {
                 walk(currentStage);
             }
         },
-            //Set how long before to start calling the TimerTask (in milliseconds)
-            0,
-            //Set the amount of time between each execution (in milliseconds)
-            100);
-
+                //Set how long before to start calling the TimerTask (in milliseconds)
+                0,
+                //Set the amount of time between each execution (in milliseconds)
+                100);
     }
 
     private void walk(int stage){
+        // Moving by DP
+        //final float scale = getContext().getResources().getDisplayMetrics().density;
+        //int pixels = (int) (dps * scale + 0.5f);
+
+        // Getting current values
         float xcoord = iv.getX();
         float ycoord = iv.getY();
         if(stage == 0101) {
@@ -79,6 +84,20 @@ public class Goblin {
                 iv.setY(iv.getY() + moveSpeed);
             }
         }
+    }
+
+    public int getHP(){
+        return goblinHP;
+    }
+
+    public boolean setHP(int hp){
+        goblinHP = hp;
+        return true;
+    }
+
+
+    public ImageView getImageView(){
+        return iv;
     }
 
 

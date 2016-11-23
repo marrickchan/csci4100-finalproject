@@ -14,7 +14,6 @@ import java.util.TimerTask;
 public class FireTower {
     final private int atkSpeed = 1200;
     final private Timer atkTimer = new Timer();
-    private boolean canAtk = true;
     final private int range = 130;
     private ImageView towerSlot;
     private RelativeLayout screen;
@@ -30,73 +29,26 @@ public class FireTower {
         towerSlot.setImageResource(R.drawable.pikachu);
         this.towerSlot = towerSlot;
         this.screen = screen;
-        // Set the timer to check for attacks every second
-        Timer t = new Timer();
-        t.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-            //Called each time when 1000 milliseconds (1 second) (the period parameter)
-                if(canAtk = true) {
-                    checkCollision();
-                }
-            }
-        },
-            //Set how long before to start calling the TimerTask (in milliseconds)
-            0,
-            //Set the amount of time between each execution (in milliseconds)
-            100);
-
-
     }
 
-    private void attack(){
-        // TESTING
-        canAtk = false;
-        // TODO:
-        // FIX THIS TIMER TO START COUNTING WHEN ATTACKED. THEN IT SETS TRUE AFTER DONE
-        atkTimer.schedule(new TimerTask() {
-            @Override
-            public void run(){
-                canAtk = true;
-            }
-        }, 0, atkSpeed);
-
+    public ImageView getImageView(){
+        return towerSlot;
     }
 
-    private boolean checkCollision(){
-        // Check collision
-        // If collided, attack
-        // Find center of the tower
-        float centerX = (x + towerSlot.getWidth())/2;
-        float centerY = (y + towerSlot.getHeight())/2;
+    public float returnX(){
+        return x;
+    }
 
-        // Check all the items on the screen and detect closeness
-        for (int i = 0; i < screen.getChildCount(); i++) {
-            View child = screen.getChildAt(i);
-            // Only compare objects that are now the same id as tower
-            // TODO:
-            // If time, detect all towers
-            if (child.getId() != towerSlot.getId()){
-                // Check Collision (CURRENTLY ONLY CHECKS BY SQUARE)
-                // (ALSO ONLY CHECKS IF CENTER OF CHILD IS IN RANGE)
+    public float returnY(){
+        return y;
+    }
 
-                // Child Center
-                float childX = (child.getX() + child.getWidth())/2;
-                float childY = (child.getY() + child.getHeight())/2;
+    public int returnRange(){
+        return range;
+    }
 
-                // Check Square Collision
-                if ( // Check Horizontally
-                        (childX > centerX - range &&
-                        childX < centerX + range)
-                        &&
-                        // Check Vertically
-                        (childY > centerY - range &&
-                        childY < centerY + range)){
-                    attack();
-                }
-            }
-        }
-        return false;
+    public RelativeLayout returnRL(){
+        return screen;
     }
 
 
