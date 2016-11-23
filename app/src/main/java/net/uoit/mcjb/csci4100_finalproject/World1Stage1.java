@@ -20,14 +20,7 @@ public class World1Stage1 extends AppCompatActivity {
     final private int STAGE_CODE = 0101;
     private int lives = 10;
     private int gold = 150;
-    private boolean towerSlot1 = true;
-    private boolean towerSlot2 = true;
-    private boolean towerSlot3 = true;
-    private boolean towerSlot4 = true;
-    private boolean towerSlot5 = true;
-    private boolean towerSlot6 = true;
-    private boolean towerSlot7 = true;
-    private boolean towerSlot8 = true;
+    private GameHelper w1s1Helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +45,7 @@ public class World1Stage1 extends AppCompatActivity {
         towers[6] = (ImageView)findViewById(R.id.w1s1Tower7);
         towers[7] = (ImageView)findViewById(R.id.w1s1Tower8);
 
-        GameHelper game = new GameHelper(this, rl, towers);
+        w1s1Helper = new GameHelper(this, rl, towers, STAGE_CODE);
     }
+
 }

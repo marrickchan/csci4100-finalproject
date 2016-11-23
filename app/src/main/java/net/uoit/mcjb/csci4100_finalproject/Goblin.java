@@ -31,6 +31,11 @@ public class Goblin {
         screen.addView(iv, lp);
     }
 
+    public boolean kill(){
+        iv = null;
+        return true;
+    }
+
     public void start(){
         // Set the timer to walk through the stage
         Timer t = new Timer();
@@ -91,7 +96,9 @@ public class Goblin {
     }
 
     public boolean setHP(int hp){
+        System.out.println("HP Before: " + goblinHP);
         goblinHP = hp;
+        System.out.println("HP After: " + goblinHP);
         return true;
     }
 

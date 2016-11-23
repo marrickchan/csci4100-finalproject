@@ -5,18 +5,66 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by user on 2016-11-22.
  */
 
 public class GameHelper {
+    // Resources from Screen
     private RelativeLayout screen;
+    private ImageView[] towers;
+    private Context context;
+    // Game Running
+    private int STAGE_CODE;
+    private boolean gameRunning = true;
+    private long start;
 
-    public GameHelper(Context context, RelativeLayout screen, ImageView[] towers){
+    // Monsters
+    // Goblin Wave 1
+    private Goblin gob1;
+
+    // Towers
+    // Goblin Wave 1
+    private FireTower t1;
+
+    public GameHelper(Context context, RelativeLayout screen, ImageView[] towers, int STAGE_CODE){
         this.screen = screen;
-        // Goblin Wave 1
-        Goblin gob1 = new Goblin(context, screen, 0101);
-        gob1.start();
+        this.towers = towers;
+        this.context = context;
+        this.STAGE_CODE = STAGE_CODE;
+
+        // Create the goblins
+        gob1 = new Goblin(context, screen, 0101);
+
+        // Create tower
+        t1 = new FireTower(towers[0].getX(), towers[0].getY(), towers[0], screen);
+
+
+        start = System.currentTimeMillis();
+        // Game Controller
+        // Set the timer to check for attacks every second
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                startLevel();
+            }
+        },
+                //Set how long before to start calling the TimerTask (in milliseconds)
+                0,
+                //Set the amount of time between each execution (in milliseconds)
+                500);
+    }
+
+    public void startLevel(){
+
+        if(System.currentTimeMillis() - start > 2005 &&
+                System.currentTimeMillis() - start < 2504){
+            gob1.start();
+        }
     }
 
     public static boolean attack(FireTower tower, Goblin goblin){
