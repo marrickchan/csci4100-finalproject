@@ -17,6 +17,7 @@ public class Goblin {
     private ImageView iv;
     private RelativeLayout screen;
     private int currentStage;
+    Timer t = new Timer();
 
     public Goblin(Context context, RelativeLayout screen, int stage){
         currentStage = stage;
@@ -32,17 +33,22 @@ public class Goblin {
     }
 
     public boolean kill(){
-        iv = null;
+        //iv.setY(5000.0f);
+        //iv.setX(5000.0f);
         return true;
     }
 
     public void start(){
+        System.out.println("Goblin started walking");
+
         // Set the timer to walk through the stage
-        Timer t = new Timer();
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                walk(currentStage);
+                boolean alive = walk(currentStage);
+                if(!alive){
+                    t.cancel();
+                }
             }
         },
                 //Set how long before to start calling the TimerTask (in milliseconds)
@@ -51,7 +57,7 @@ public class Goblin {
                 100);
     }
 
-    private void walk(int stage){
+    private boolean walk(int stage){
         // Moving by DP
         //final float scale = getContext().getResources().getDisplayMetrics().density;
         //int pixels = (int) (dps * scale + 0.5f);
@@ -64,8 +70,8 @@ public class Goblin {
             // TODO:
             // REMOVE A LIFE
             if(ycoord > 1280){
-                // TODO:
-                // DELETE GOBLIN???
+                //kill();
+                return false;
             // Last turn into exit (+y)
             } else if(xcoord > 920 && ycoord > 930) {
                 iv.setY(iv.getY() + moveSpeed);
@@ -89,6 +95,7 @@ public class Goblin {
                 iv.setY(iv.getY() + moveSpeed);
             }
         }
+        return true;
     }
 
     public int getHP(){

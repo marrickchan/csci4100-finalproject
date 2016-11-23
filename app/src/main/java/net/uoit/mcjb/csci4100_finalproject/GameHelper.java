@@ -25,6 +25,10 @@ public class GameHelper {
     // Monsters
     // Goblin Wave 1
     private Goblin gob1;
+    private Goblin gob2;
+    private Goblin gob3;
+    private Goblin gob4;
+    private Goblin gob5;
 
     // Towers
     // Goblin Wave 1
@@ -38,14 +42,18 @@ public class GameHelper {
 
         // Create the goblins
         gob1 = new Goblin(context, screen, 0101);
+        gob2 = new Goblin(context, screen, 0101);
+        gob3 = new Goblin(context, screen, 0101);
+        gob4 = new Goblin(context, screen, 0101);
+        gob5 = new Goblin(context, screen, 0101);
 
         // Create tower
         t1 = new FireTower(towers[0].getX(), towers[0].getY(), towers[0], screen);
 
-
+        // Start time of stage
         start = System.currentTimeMillis();
-        // Game Controller
-        // Set the timer to check for attacks every second
+
+        // Set the timer to tick to run the game
         Timer t = new Timer();
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -60,10 +68,17 @@ public class GameHelper {
     }
 
     public void startLevel(){
-
-        if(System.currentTimeMillis() - start > 2005 &&
-                System.currentTimeMillis() - start < 2504){
+        long currentTime = System.currentTimeMillis() - start;
+        if(currentTime > 2005 && currentTime < 2504){
             gob1.start();
+        } else if(currentTime > 5005 && currentTime < 5504) {
+            gob2.start();
+        } else if(currentTime > 8005 && currentTime < 8504) {
+            gob3.start();
+        } else if(currentTime > 11005 && currentTime < 11504) {
+            gob4.start();
+        } else if(currentTime > 14005 && currentTime < 14504) {
+            gob5.start();
         }
     }
 
