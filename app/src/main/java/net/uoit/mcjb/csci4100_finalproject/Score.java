@@ -5,6 +5,7 @@ package net.uoit.mcjb.csci4100_finalproject;
  */
 
 public class Score {
+    // Todo: add rank number once db integrated
     private String name;
     private long score;
 
