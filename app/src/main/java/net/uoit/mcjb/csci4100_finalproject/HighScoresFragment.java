@@ -13,34 +13,31 @@ import java.util.ArrayList;
 public class HighScoresFragment extends ListFragment {
     private ArrayList<Score> scores;
     private ScoreAdapter scoreAdapter;
+    ScoreDBHelper db;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        scores = new ArrayList<>();
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
-        scores.add(new Score("John Smith", 3434));
+        db = new ScoreDBHelper(this.getActivity());
+        scores = db.getAllScores();
+
+        // TODO: Need to change to pull from db once scores added after game
+        for (int i = 0; i < 10; i++) {
+            //name is currently primary key
+            scores.add(new Score("John Smith" + i, 34354));
+            db.addScore(scores.get(i));
+        }
+
         scoreAdapter = new ScoreAdapter(getActivity(), scores);
         setListAdapter(scoreAdapter);
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
+    public void onStart() {
+        super.onStart();
+        scores = db.getAllScores();
+        scoreAdapter = new ScoreAdapter(getActivity(), scores);
+        setListAdapter(scoreAdapter);
     }
 }

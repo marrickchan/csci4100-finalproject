@@ -22,10 +22,6 @@ public class HighScores extends AppCompatActivity {
                 finish();
             }
         });
-
-
-        //Todo: Incorporate Database
-
     }
 
 }

@@ -44,10 +44,10 @@ public class ScoreDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public ArrayList<Score> getAllScores() {
+    ArrayList<Score> getAllScores() {
         ArrayList<Score> allScores = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-
+        Score score;
         //      Log.d("DB", "Count: " + res.getCount());
 
         try {
@@ -55,14 +55,13 @@ public class ScoreDBHelper extends SQLiteOpenHelper {
             // looping through all rows and adding to list
             if (res.moveToFirst()) {
                 do {
-                    Score score = new Score(res.getString(res.getColumnIndex(NAME)),
+                    score = new Score(res.getString(res.getColumnIndex(NAME)),
                             Long.valueOf(res.getString(res.getColumnIndex(SCORE))));
                     allScores.add(score);
                 } while (res.moveToNext());
             }
 
             res.close();
-            db.close();
         } catch (Exception e) {
             Log.d("ScoreDBHelper", "Exception", e);
         }
@@ -79,13 +78,16 @@ public class ScoreDBHelper extends SQLiteOpenHelper {
     }
 
     // Add score
-    public boolean addScore (String playerName, long score) {
+    boolean addScore(Score score) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(NAME, playerName);
-        contentValues.put(SCORE, score);
-        return true;
+        contentValues.put(NAME, score.getName());
+        contentValues.put(SCORE, score.getScore());
+        if(db.insert(TABLE_NAME, null, contentValues) != -1) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
 }
