@@ -18,8 +18,6 @@ public class World1Stage1 extends AppCompatActivity {
     final private int FIRE_TOWER = 5006;
     final private int CANNON_TOWER = 5007;
     final private int STAGE_CODE = 0101;
-    private int lives = 10;
-    private int gold = 150;
     private GameHelper w1s1Helper;
 
     @Override
@@ -27,9 +25,7 @@ public class World1Stage1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_world1_stage1);
 
-        // Initialize Information Bar
-        TextView infoBar = (TextView)findViewById(R.id.infoBar);
-        infoBar.setText("Lives: " + lives + "  | Gold: " + gold);
+
 
         // Layout
         RelativeLayout rl = (RelativeLayout)findViewById(R.id.activity_world1_stage1);
@@ -48,4 +44,11 @@ public class World1Stage1 extends AppCompatActivity {
         w1s1Helper = new GameHelper(this, rl, towers, STAGE_CODE);
     }
 
+    public void onStop(){
+        System.out.println("Closed Stage 1");
+        w1s1Helper.kill();
+        finish();
+
+        super.onStop();
+    }
 }

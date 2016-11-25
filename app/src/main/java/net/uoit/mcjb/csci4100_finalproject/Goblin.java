@@ -18,9 +18,11 @@ public class Goblin {
     private RelativeLayout screen;
     private int currentStage;
     Timer t = new Timer();
+    private int enemyNumber; // Number of enemy position in wave (used for goblin deletion/score)
 
-    public Goblin(Context context, RelativeLayout screen, int stage){
+    public Goblin(Context context, RelativeLayout screen, int stage, int enemyNumber){
         currentStage = stage;
+        this.enemyNumber = enemyNumber;
         // Set the image
         this.screen = screen;
         iv = new ImageView(context);
@@ -30,6 +32,30 @@ public class Goblin {
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(30, 0, 0, 0);
         screen.addView(iv, lp);
+    }
+
+    public int getEnemyNumber(){
+        return enemyNumber;
+    }
+
+    public float getX(){
+        System.out.println("Returnning X: " + iv.getX());
+        return iv.getX();
+    }
+
+    public float getY(){
+        System.out.println("Returnning Y: " + iv.getY());
+        return iv.getY();
+    }
+
+    public float getWidth(){
+        System.out.println("Returnning Width: " + iv.getWidth());
+        return iv.getWidth();
+    }
+
+    public float getHeight(){
+        System.out.println("Returnning Height: " + iv.getHeight());
+        return iv.getHeight();
     }
 
     public boolean kill(){
@@ -45,8 +71,8 @@ public class Goblin {
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                boolean alive = walk(currentStage);
-                if(!alive){
+                boolean end = walk(currentStage);
+                if(end){
                     t.cancel();
                 }
             }
@@ -71,7 +97,7 @@ public class Goblin {
             // REMOVE A LIFE
             if(ycoord > 1280){
                 //kill();
-                return false;
+                return true;
             // Last turn into exit (+y)
             } else if(xcoord > 920 && ycoord > 930) {
                 iv.setY(iv.getY() + moveSpeed);
@@ -95,7 +121,7 @@ public class Goblin {
                 iv.setY(iv.getY() + moveSpeed);
             }
         }
-        return true;
+        return false;
     }
 
     public int getHP(){
@@ -106,7 +132,11 @@ public class Goblin {
         System.out.println("HP Before: " + goblinHP);
         goblinHP = hp;
         System.out.println("HP After: " + goblinHP);
-        return true;
+        if(hp <= 0){
+            kill();
+            return true;
+        }
+        return false;
     }
 
 
