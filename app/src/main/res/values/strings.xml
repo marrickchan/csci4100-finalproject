@@ -13,7 +13,6 @@
     <string name="w1s2">World 1 - Stage 2</string>
     <string name="w1s3">World 1 - Stage 3</string>
 
-
     <!-- Instructions Screen -->
     <string name="instructionsTitle">Instructions</string>
     <string name="instructionsContent">
@@ -55,4 +54,7 @@
     <string name="back_HighScoreScreen">Back</string>
     <string name="title_activity_high_scores">HighScores</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Game Screens -->
+    <string name="startRound">Start Round</string>
 </resources>

@@ -2,6 +2,7 @@ package net.uoit.mcjb.csci4100_finalproject;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ public class GameHelper {
     private int STAGE_CODE;
     // private boolean gameRunning = true;
     // Set the timer to tick to run the game
-    Timer t = new Timer();
+    private Timer t = new Timer();
     private long start;
     private int score = 0;
     private int lives = 10;
@@ -39,8 +40,11 @@ public class GameHelper {
     private Goblin gob5;
 
     // Towers
-    // Goblin Wave 1
-    private FireTower t1;
+    private FireTower fireTowers[] = new FireTower[8];
+    private boolean towerBuilt[] = new boolean[8];
+    private Timer towerTimer[] = new Timer[8];
+    // Helper For Listener
+    private int currentTowerListenerHelper = 0;
 
     // Wave Management
     private Map<Integer, Goblin> goblinsActive = new HashMap<Integer, Goblin>();
@@ -49,60 +53,394 @@ public class GameHelper {
     private int wave = 0;
     private int waveEnemies = 0;
 
-    public GameHelper(Context context, RelativeLayout screen, ImageView[] towers, int STAGE_CODE){
+    public GameHelper(Context context, final RelativeLayout screen, final ImageView[] towers, int STAGE_CODE){
         this.screen = screen;
         this.towers = towers;
         this.context = context;
         this.STAGE_CODE = STAGE_CODE;
 
         // Initialize Information Bar
-        TextView infoBar = (TextView)screen.findViewById(R.id.infoBar);
+        final TextView infoBar = (TextView)screen.findViewById(R.id.infoBar);
         infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
-
-        // Create the goblins
-        gob1 = new Goblin(context, screen, 0101, ++waveEnemies);
-        goblinsActive.put(waveEnemies, gob1);
-        gob2 = new Goblin(context, screen, 0101, ++waveEnemies);
-        goblinsActive.put(waveEnemies, gob2);
-        gob3 = new Goblin(context, screen, 0101, ++waveEnemies);
-        goblinsActive.put(waveEnemies, gob3);
-        gob4 = new Goblin(context, screen, 0101, ++waveEnemies);
-        goblinsActive.put(waveEnemies, gob4);
-        gob5 = new Goblin(context, screen, 0101, ++waveEnemies);
-        goblinsActive.put(waveEnemies, gob5);
-
-        goblinsAlive = new int[waveEnemies];
-        for(int i = 0; i < waveEnemies; i++){
-            goblinsAlive[i] = 1;
+        // Towers all FALSE built
+        for(int i = 0; i < towers.length; i++){
+            towerBuilt[i] = false;
+            towerTimer[i] = new Timer();
         }
 
-
-        // Create tower
-        t1 = new FireTower(towers[0].getX(), towers[0].getY(), towers[0], screen);
-
-        // Start time of stage
-        start = System.currentTimeMillis();
-
-        t.scheduleAtFixedRate(new TimerTask() {
+        // Tower Slots
+        towers[0].setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                runGame();
-                for(int i = 1; i <= waveEnemies; i++){
-                    System.out.println("Loop number: " + i);
-                    // Check if goblin is alive
-                    if(goblinsAlive[i-1] != 0) {
-                        if (goblinsActive.get(i) != null) {
-                            attack(t1, goblinsActive.get(i));
-                        }
-                    }
+            public void onClick(View v) {
+                if(!towerBuilt[0]){
+                    towerBuilt[0] = true;
+                    // Build the tower
+                    if( gold >= 100 ){
+                        // Tower is built, start timer for the attack on that tower
+                        gold -= 100;
+                        fireTowers[0] = new FireTower(towers[0].getX(),
+                                towers[0].getY(), towers[0], screen);
+                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
 
+                        // Attack Using Timer
+                        // Start Timing Game
+                        towerTimer[0].scheduleAtFixedRate(new TimerTask() {
+                              @Override
+                              public void run() {
+                                  for (int i = 1; i <= waveEnemies; i++) {
+
+                                      // Check if goblin is alive
+                                      // Target first goblin system
+                                      if (goblinsAlive[i - 1] != 0) {
+                                          if (goblinsActive.get(i) != null) {
+
+                                              // TO DO:
+                                              // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
+
+                                              if(fireTowers[0] != null){
+                                                  if(attack(fireTowers[0], goblinsActive.get(i))){
+                                                      return;
+                                                  }
+                                              }
+
+
+                                          }
+                                      }
+                                  }
+                              }
+                        },
+                            //Set how long before to start calling the TimerTask (in milliseconds)
+                            0,
+                            //Set the amount of time between each execution (in milliseconds)
+                            500);
+
+                    }
                 }
             }
-        },
-                //Set how long before to start calling the TimerTask (in milliseconds)
-                0,
-                //Set the amount of time between each execution (in milliseconds)
-                500);
+        });
+
+        // Tower Slots
+        towers[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!towerBuilt[1]){
+                    towerBuilt[1] = true;
+                    // Build the tower
+                    if( gold >= 100 ){
+                        // Tower is built, start timer for the attack on that tower
+                        gold -= 100;
+                        fireTowers[1] = new FireTower(towers[1].getX(),
+                                towers[1].getY(), towers[1], screen);
+                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+                        // Attack Using Timer
+                        // Start Timing Game
+                        towerTimer[1].scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                for (int i = 1; i <= waveEnemies; i++) {
+
+                                    // Check if goblin is alive
+                                    // Target first goblin system
+                                    if (goblinsAlive[i - 1] != 0) {
+                                        if (goblinsActive.get(i) != null) {
+                                            // TO DO:
+                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
+                                            if (fireTowers[1] != null) {
+                                                if(attack(fireTowers[1], goblinsActive.get(i))){
+                                                    return;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                            //Set how long before to start calling the TimerTask (in milliseconds)
+                            0,
+                            //Set the amount of time between each execution (in milliseconds)
+                            500);
+                    }
+                }
+            }
+        });
+
+        // Tower Slots
+        towers[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!towerBuilt[2]){
+                    towerBuilt[2] = true;
+                    // Build the tower
+                    if( gold >= 100 ){
+                        // Tower is built, start timer for the attack on that tower
+                        gold -= 100;
+                        fireTowers[2] = new FireTower(towers[2].getX(),
+                                towers[2].getY(), towers[2], screen);
+                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+                        // Attack Using Timer
+                        // Start Timing Game
+                        towerTimer[2].scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                for (int i = 1; i <= waveEnemies; i++) {
+
+                                    // Check if goblin is alive
+                                    // Target first goblin system
+                                    if (goblinsAlive[i - 1] != 0) {
+                                        if (goblinsActive.get(i) != null) {
+                                            // TO DO:
+                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
+                                            if (fireTowers[2] != null) {
+                                                if(attack(fireTowers[2], goblinsActive.get(i))){
+                                                    return;
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                            //Set how long before to start calling the TimerTask (in milliseconds)
+                            0,
+                            //Set the amount of time between each execution (in milliseconds)
+                            500);
+                    }
+                }
+            }
+        });
+
+        // Tower Slots
+        towers[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!towerBuilt[3]){
+                    towerBuilt[3] = true;
+                    // Build the tower
+                    if( gold >= 100 ){
+                        // Tower is built, start timer for the attack on that tower
+                        gold -= 100;
+                        fireTowers[3] = new FireTower(towers[3].getX(),
+                                towers[3].getY(), towers[3], screen);
+                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+                        towerTimer[3].scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                for (int i = 1; i <= waveEnemies; i++) {
+
+                                    // Check if goblin is alive
+                                    // Target first goblin system
+                                    if (goblinsAlive[i - 1] != 0) {
+                                        if (goblinsActive.get(i) != null) {
+                                            // TO DO:
+                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
+                                            if (fireTowers[3] != null) {
+                                                if(attack(fireTowers[3], goblinsActive.get(i))){
+                                                    return;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                            //Set how long before to start calling the TimerTask (in milliseconds)
+                            0,
+                            //Set the amount of time between each execution (in milliseconds)
+                            500);
+                    }
+                }
+            }
+        });
+
+        // Tower Slots
+        towers[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!towerBuilt[4]){
+                    towerBuilt[4] = true;
+                    // Build the tower
+                    if( gold >= 100 ){
+                        // Tower is built, start timer for the attack on that tower
+                        gold -= 100;
+                        fireTowers[4] = new FireTower(towers[4].getX(),
+                                towers[4].getY(), towers[4], screen);
+                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+                        towerTimer[4].scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                for (int i = 1; i <= waveEnemies; i++) {
+
+                                    // Check if goblin is alive
+                                    // Target first goblin system
+                                    if (goblinsAlive[i - 1] != 0) {
+                                        if (goblinsActive.get(i) != null) {
+                                            // TO DO:
+                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
+                                            if (fireTowers[4] != null) {
+                                                if(attack(fireTowers[4], goblinsActive.get(i))){
+                                                    return;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                            //Set how long before to start calling the TimerTask (in milliseconds)
+                            0,
+                            //Set the amount of time between each execution (in milliseconds)
+                            500);
+
+                    }
+                }
+            }
+        });
+
+        // Tower Slots
+        towers[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!towerBuilt[5]){
+                    towerBuilt[5] = true;
+                    // Build the tower
+                    if( gold >= 100 ){
+                        // Tower is built, start timer for the attack on that tower
+                        gold -= 100;
+                        fireTowers[5] = new FireTower(towers[5].getX(),
+                                towers[5].getY(), towers[5], screen);
+                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+                        towerTimer[5].scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                for (int i = 1; i <= waveEnemies; i++) {
+
+                                    // Check if goblin is alive
+                                    // Target first goblin system
+                                    if (goblinsAlive[i - 1] != 0) {
+                                        if (goblinsActive.get(i) != null) {
+                                            // TO DO:
+                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
+                                            if (fireTowers[5] != null) {
+                                                if(attack(fireTowers[5], goblinsActive.get(i))){
+                                                    return;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                            //Set how long before to start calling the TimerTask (in milliseconds)
+                            0,
+                            //Set the amount of time between each execution (in milliseconds)
+                            500);
+                    }
+                }
+            }
+        });
+
+        // Tower Slots
+        towers[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!towerBuilt[6]){
+                    towerBuilt[6] = true;
+                    // Build the tower
+                    if( gold >= 100 ){
+                        // Tower is built, start timer for the attack on that tower
+                        gold -= 100;
+                        fireTowers[6] = new FireTower(towers[6].getX(),
+                                towers[6].getY(), towers[6], screen);
+                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+                        towerTimer[6].scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                for (int i = 1; i <= waveEnemies; i++) {
+
+                                    // Check if goblin is alive
+                                    // Target first goblin system
+                                    if (goblinsAlive[i - 1] != 0) {
+                                        if (goblinsActive.get(i) != null) {
+                                            // TO DO:
+                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
+                                            if (fireTowers[6] != null) {
+                                                if(attack(fireTowers[6], goblinsActive.get(i))){
+                                                    return;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                            //Set how long before to start calling the TimerTask (in milliseconds)
+                            0,
+                            //Set the amount of time between each execution (in milliseconds)
+                            500);
+                    }
+                }
+            }
+        });
+
+        // Tower Slots
+        towers[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!towerBuilt[7]){
+                    towerBuilt[7] = true;
+                    // Build the tower
+                    if( gold >= 100 ){
+                        // Tower is built, start timer for the attack on that tower
+                        gold -= 100;
+                        fireTowers[7] = new FireTower(towers[7].getX(),
+                                towers[7].getY(), towers[7], screen);
+                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+                        towerTimer[7].scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                for (int i = 1; i <= waveEnemies; i++) {
+
+                                    // Check if goblin is alive
+                                    // Target first goblin system
+                                    if (goblinsAlive[i - 1] != 0) {
+                                        if (goblinsActive.get(i) != null) {
+                                            // TO DO:
+                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
+                                            if (fireTowers[7] != null) {
+                                                if(attack(fireTowers[7], goblinsActive.get(i))){
+                                                    return;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                                //Set how long before to start calling the TimerTask (in milliseconds)
+                                0,
+                                //Set the amount of time between each execution (in milliseconds)
+                                500);
+                    }
+                }
+            }
+        });
+
+        // Start Game Button
+        final Button startRoundButton = (Button)screen.findViewById(R.id.startRoundw1s1);
+        startRoundButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRoundButton.setVisibility(View.INVISIBLE);
+                startRoundButton.setEnabled(false);
+                startGame();
+            }
+        });
+    }
+
+    private void startGame(){
+        wave++;
+        waveStart();
     }
 
     private void runGame(){
@@ -123,7 +461,39 @@ public class GameHelper {
     }
 
     private void waveStart(){
+        // Start time of stage
+        start = System.currentTimeMillis();
 
+        if(wave == 1) {
+            // Create the goblins
+            gob1 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob1);
+            gob2 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob2);
+            gob3 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob3);
+            gob4 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob4);
+            gob5 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob5);
+
+            goblinsAlive = new int[waveEnemies];
+            for (int i = 0; i < waveEnemies; i++) {
+                goblinsAlive[i] = 1;
+            }
+        }
+
+        // Start Timing Game
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runGame();
+            }
+        },
+            //Set how long before to start calling the TimerTask (in milliseconds)
+            0,
+            //Set the amount of time between each execution (in milliseconds)
+            500);
     }
 
     private void waveEnd(){
@@ -163,7 +533,9 @@ public class GameHelper {
                 if(goblinsActive.size() == 0){
                     waveEnd();
                 }
+                gold+= 10;
             }
+            return true;
         }
         return false;
     }
