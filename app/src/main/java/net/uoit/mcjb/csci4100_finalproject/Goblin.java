@@ -39,22 +39,18 @@ public class Goblin {
     }
 
     public float getX(){
-        System.out.println("Returnning X: " + iv.getX());
         return iv.getX();
     }
 
     public float getY(){
-        System.out.println("Returnning Y: " + iv.getY());
         return iv.getY();
     }
 
     public float getWidth(){
-        System.out.println("Returnning Width: " + iv.getWidth());
         return iv.getWidth();
     }
 
     public float getHeight(){
-        System.out.println("Returnning Height: " + iv.getHeight());
         return iv.getHeight();
     }
 
@@ -65,8 +61,6 @@ public class Goblin {
     }
 
     public void start(){
-        System.out.println("Goblin started walking");
-
         // Set the timer to walk through the stage
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -96,7 +90,7 @@ public class Goblin {
             // TODO:
             // REMOVE A LIFE
             if(ycoord > 1280){
-                //kill();
+                kill();
                 return true;
             // Last turn into exit (+y)
             } else if(xcoord > 920 && ycoord > 930) {
@@ -129,9 +123,7 @@ public class Goblin {
     }
 
     public boolean setHP(int hp){
-        System.out.println("HP Before: " + goblinHP);
         goblinHP = hp;
-        System.out.println("HP After: " + goblinHP);
         if(hp <= 0){
             kill();
             return true;

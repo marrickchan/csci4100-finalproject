@@ -1,6 +1,8 @@
 package net.uoit.mcjb.csci4100_finalproject;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +23,9 @@ public class GameHelper {
     private RelativeLayout screen;
     private ImageView[] towers;
     private Context context;
+    private TextView infoBar;
+    private Timer infoBarTimer = new Timer();
+    final Handler myHandler = new Handler();
     // Game Running
     private int STAGE_CODE;
     // private boolean gameRunning = true;
@@ -29,7 +34,7 @@ public class GameHelper {
     private long start;
     private int score = 0;
     private int lives = 10;
-    private int gold = 150;
+    private int gold = 250;
 
     // Monsters
     // Goblin Wave 1
@@ -49,18 +54,17 @@ public class GameHelper {
     // Wave Management
     private Map<Integer, Goblin> goblinsActive = new HashMap<Integer, Goblin>();
     private int[] goblinsAlive;
-    private Map<Integer, FireTower> towersActive = new HashMap<Integer, FireTower>();
     private int wave = 0;
     private int waveEnemies = 0;
 
-    public GameHelper(Context context, final RelativeLayout screen, final ImageView[] towers, int STAGE_CODE){
+    public GameHelper(final Context context, final RelativeLayout screen, final ImageView[] towers, int STAGE_CODE){
         this.screen = screen;
         this.towers = towers;
         this.context = context;
         this.STAGE_CODE = STAGE_CODE;
 
         // Initialize Information Bar
-        final TextView infoBar = (TextView)screen.findViewById(R.id.infoBar);
+        infoBar = (TextView)screen.findViewById(R.id.infoBar);
         infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
         // Towers all FALSE built
         for(int i = 0; i < towers.length; i++){
@@ -112,7 +116,7 @@ public class GameHelper {
                             //Set how long before to start calling the TimerTask (in milliseconds)
                             0,
                             //Set the amount of time between each execution (in milliseconds)
-                            500);
+                            fireTowers[0].getAtkSpeed());
 
                     }
                 }
@@ -158,7 +162,7 @@ public class GameHelper {
                             //Set how long before to start calling the TimerTask (in milliseconds)
                             0,
                             //Set the amount of time between each execution (in milliseconds)
-                            500);
+                            fireTowers[1].getAtkSpeed());
                     }
                 }
             }
@@ -204,7 +208,7 @@ public class GameHelper {
                             //Set how long before to start calling the TimerTask (in milliseconds)
                             0,
                             //Set the amount of time between each execution (in milliseconds)
-                            500);
+                            fireTowers[2].getAtkSpeed());
                     }
                 }
             }
@@ -247,7 +251,7 @@ public class GameHelper {
                             //Set how long before to start calling the TimerTask (in milliseconds)
                             0,
                             //Set the amount of time between each execution (in milliseconds)
-                            500);
+                            fireTowers[3].getAtkSpeed());
                     }
                 }
             }
@@ -290,7 +294,7 @@ public class GameHelper {
                             //Set how long before to start calling the TimerTask (in milliseconds)
                             0,
                             //Set the amount of time between each execution (in milliseconds)
-                            500);
+                            fireTowers[4].getAtkSpeed());
 
                     }
                 }
@@ -334,7 +338,7 @@ public class GameHelper {
                             //Set how long before to start calling the TimerTask (in milliseconds)
                             0,
                             //Set the amount of time between each execution (in milliseconds)
-                            500);
+                            fireTowers[5].getAtkSpeed());
                     }
                 }
             }
@@ -377,7 +381,7 @@ public class GameHelper {
                             //Set how long before to start calling the TimerTask (in milliseconds)
                             0,
                             //Set the amount of time between each execution (in milliseconds)
-                            500);
+                            fireTowers[6].getAtkSpeed());
                     }
                 }
             }
@@ -417,14 +421,21 @@ public class GameHelper {
                                 }
                             }
                         },
-                                //Set how long before to start calling the TimerTask (in milliseconds)
-                                0,
-                                //Set the amount of time between each execution (in milliseconds)
-                                500);
+                            //Set how long before to start calling the TimerTask (in milliseconds)
+                            0,
+                            //Set the amount of time between each execution (in milliseconds)
+                            fireTowers[7].getAtkSpeed());
                     }
                 }
             }
         });
+
+        infoBarTimer.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run(){
+                updateInfoBar();
+            }
+        }, 0, 500);
 
         // Start Game Button
         final Button startRoundButton = (Button)screen.findViewById(R.id.startRoundw1s1);
@@ -437,6 +448,16 @@ public class GameHelper {
             }
         });
     }
+
+    private void updateInfoBar(){
+        myHandler.post(myRunnable);
+    }
+    final Runnable myRunnable = new Runnable() {
+        public void run() {
+            System.out.println("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+            infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+        }
+    };
 
     private void startGame(){
         wave++;
@@ -498,6 +519,7 @@ public class GameHelper {
 
     private void waveEnd(){
         System.out.println("Wave is done");
+        waveEnemies = 0;
         t.cancel();
     }
 
@@ -525,6 +547,9 @@ public class GameHelper {
 
             if(goblin.setHP(goblin.getHP() - 2)){
                 // Increase score
+                gold+= 10;
+                score+= 50;
+                System.out.println("Added Score and Gold");
                 // Remove goblin from active goblins
                 goblinsActive.remove(goblin.getEnemyNumber());
                 // 0 means goblin is dead
@@ -533,7 +558,7 @@ public class GameHelper {
                 if(goblinsActive.size() == 0){
                     waveEnd();
                 }
-                gold+= 10;
+
             }
             return true;
         }

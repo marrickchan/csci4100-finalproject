@@ -12,7 +12,7 @@ import java.util.TimerTask;
  */
 
 public class FireTower {
-    final private int atkSpeed = 1200;
+    final private int atkSpeed = 2500;
     final private Timer atkTimer = new Timer();
     final private int range = 130;
     private ImageView towerSlot;
@@ -27,6 +27,10 @@ public class FireTower {
         towerSlot.setImageResource(R.drawable.pikachu);
         this.towerSlot = towerSlot;
         this.screen = screen;
+    }
+
+    public int getAtkSpeed(){
+        return atkSpeed;
     }
 
     public ImageView getImageView(){
