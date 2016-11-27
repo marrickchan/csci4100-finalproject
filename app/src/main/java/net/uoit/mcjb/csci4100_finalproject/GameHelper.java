@@ -84,7 +84,6 @@ public class GameHelper {
 
         // Initialize Information Bar
         infoBar = (TextView)screen.findViewById(R.id.infoBar);
-        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
         // Towers all FALSE built
         for(int i = 0; i < towers.length; i++){
             towerBuilt[i] = false;
@@ -103,7 +102,6 @@ public class GameHelper {
                         gold -= 100;
                         fireTowers[0] = new FireTower(towers[0].getX(),
                                 towers[0].getY(), towers[0], screen);
-                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
 
                         // Attack Using Timer
                         // Start Timing Game
@@ -111,22 +109,19 @@ public class GameHelper {
                               @Override
                               public void run() {
                                   for (int i = 1; i <= waveEnemies; i++) {
-
                                       // Check if goblin is alive
                                       // Target first goblin system
-                                      if (goblinsAlive[i - 1] != 0) {
-                                          if (goblinsActive.get(i) != null) {
-
-                                              // TO DO:
-                                              // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
-
-                                              if(fireTowers[0] != null){
-                                                  if(attack(fireTowers[0], goblinsActive.get(i))){
+                                      if (goblinsAlive[i - 1] != 0 || trollsAlive[i-1] != 0) {
+                                          if (fireTowers[0] != null) {
+                                              if(trollsActive.get(i) != null) {
+                                                  if (attack(fireTowers[0], trollsActive.get(i))) {
+                                                      return;
+                                                  }
+                                              } else if(goblinsActive.get(i) != null){
+                                                  if (attack(fireTowers[0], goblinsActive.get(i))) {
                                                       return;
                                                   }
                                               }
-
-
                                           }
                                       }
                                   }
@@ -154,29 +149,23 @@ public class GameHelper {
                         gold -= 100;
                         fireTowers[1] = new FireTower(towers[1].getX(),
                                 towers[1].getY(), towers[1], screen);
-                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
                         // Attack Using Timer
                         // Start Timing Game
                         towerTimer[1].scheduleAtFixedRate(new TimerTask() {
                             @Override
                             public void run() {
                                 for (int i = 1; i <= waveEnemies; i++) {
-
                                     // Check if goblin is alive
                                     // Target first goblin system
-                                    if (goblinsAlive[i - 1] != 0) {
-                                        if (goblinsActive.get(i) != null) {
-                                            // TO DO:
-                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
-                                            if (fireTowers[1] != null) {
-                                                if(trollsActive.get(i) != null) {
-                                                    if (attack(fireTowers[3], trollsActive.get(i))) {
-                                                        return;
-                                                    }
-                                                } else if(goblinsActive.get(i) != null){
-                                                    if (attack(fireTowers[3], goblinsActive.get(i))) {
-                                                        return;
-                                                    }
+                                    if (goblinsAlive[i - 1] != 0 || trollsAlive[i-1] != 0) {
+                                        if (fireTowers[1] != null) {
+                                            if(trollsActive.get(i) != null) {
+                                                if (attack(fireTowers[1], trollsActive.get(i))) {
+                                                    return;
+                                                }
+                                            } else if(goblinsActive.get(i) != null){
+                                                if (attack(fireTowers[1], goblinsActive.get(i))) {
+                                                    return;
                                                 }
                                             }
                                         }
@@ -205,25 +194,24 @@ public class GameHelper {
                         gold -= 100;
                         fireTowers[2] = new FireTower(towers[2].getX(),
                                 towers[2].getY(), towers[2], screen);
-                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
                         // Attack Using Timer
                         // Start Timing Game
                         towerTimer[2].scheduleAtFixedRate(new TimerTask() {
                             @Override
                             public void run() {
                                 for (int i = 1; i <= waveEnemies; i++) {
-
                                     // Check if goblin is alive
                                     // Target first goblin system
-                                    if (goblinsAlive[i - 1] != 0) {
-                                        if (goblinsActive.get(i) != null) {
-                                            // TO DO:
-                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
-                                            if (fireTowers[2] != null) {
-                                                if(attack(fireTowers[2], goblinsActive.get(i))){
+                                    if (goblinsAlive[i - 1] != 0 || trollsAlive[i-1] != 0) {
+                                        if (fireTowers[2] != null) {
+                                            if(trollsActive.get(i) != null) {
+                                                if (attack(fireTowers[2], trollsActive.get(i))) {
                                                     return;
                                                 }
-
+                                            } else if(goblinsActive.get(i) != null){
+                                                if (attack(fireTowers[2], goblinsActive.get(i))) {
+                                                    return;
+                                                }
                                             }
                                         }
                                     }
@@ -251,27 +239,21 @@ public class GameHelper {
                         gold -= 100;
                         fireTowers[3] = new FireTower(towers[3].getX(),
                                 towers[3].getY(), towers[3], screen);
-                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
                         towerTimer[3].scheduleAtFixedRate(new TimerTask() {
                             @Override
                             public void run() {
                                 for (int i = 1; i <= waveEnemies; i++) {
-
                                     // Check if goblin is alive
                                     // Target first goblin system
-                                    if (goblinsAlive[i - 1] != 0) {
-                                        if (goblinsActive.get(i) != null) {
-                                            // TO DO:
-                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
-                                            if (fireTowers[3] != null) {
-                                                if(trollsActive.get(i) != null) {
-                                                    if (attack(fireTowers[3], trollsActive.get(i))) {
-                                                        return;
-                                                    }
-                                                } else if(goblinsActive.get(i) != null){
-                                                    if (attack(fireTowers[3], goblinsActive.get(i))) {
-                                                        return;
-                                                    }
+                                    if (goblinsAlive[i - 1] != 0 || trollsAlive[i-1] != 0) {
+                                        if (fireTowers[3] != null) {
+                                            if(trollsActive.get(i) != null) {
+                                                if (attack(fireTowers[3], trollsActive.get(i))) {
+                                                    return;
+                                                }
+                                            } else if(goblinsActive.get(i) != null){
+                                                if (attack(fireTowers[3], goblinsActive.get(i))) {
+                                                    return;
                                                 }
                                             }
                                         }
@@ -300,7 +282,6 @@ public class GameHelper {
                         gold -= 100;
                         fireTowers[4] = new FireTower(towers[4].getX(),
                                 towers[4].getY(), towers[4], screen);
-                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
                         towerTimer[4].scheduleAtFixedRate(new TimerTask() {
                             @Override
                             public void run() {
@@ -308,12 +289,14 @@ public class GameHelper {
 
                                     // Check if goblin is alive
                                     // Target first goblin system
-                                    if (goblinsAlive[i - 1] != 0) {
-                                        if (goblinsActive.get(i) != null) {
-                                            // TO DO:
-                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
-                                            if (fireTowers[4] != null) {
-                                                if(attack(fireTowers[4], goblinsActive.get(i))){
+                                    if (goblinsAlive[i - 1] != 0 || trollsAlive[i-1] != 0) {
+                                        if (fireTowers[4] != null) {
+                                            if(trollsActive.get(i) != null) {
+                                                if (attack(fireTowers[4], trollsActive.get(i))) {
+                                                    return;
+                                                }
+                                            } else if(goblinsActive.get(i) != null){
+                                                if (attack(fireTowers[4], goblinsActive.get(i))) {
                                                     return;
                                                 }
                                             }
@@ -344,7 +327,6 @@ public class GameHelper {
                         gold -= 100;
                         fireTowers[5] = new FireTower(towers[5].getX(),
                                 towers[5].getY(), towers[5], screen);
-                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
                         towerTimer[5].scheduleAtFixedRate(new TimerTask() {
                             @Override
                             public void run() {
@@ -352,12 +334,14 @@ public class GameHelper {
 
                                     // Check if goblin is alive
                                     // Target first goblin system
-                                    if (goblinsAlive[i - 1] != 0) {
-                                        if (goblinsActive.get(i) != null) {
-                                            // TO DO:
-                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
-                                            if (fireTowers[5] != null) {
-                                                if(attack(fireTowers[5], goblinsActive.get(i))){
+                                    if (goblinsAlive[i - 1] != 0 || trollsAlive[i-1] != 0) {
+                                        if (fireTowers[5] != null) {
+                                            if(trollsActive.get(i) != null) {
+                                                if (attack(fireTowers[5], trollsActive.get(i))) {
+                                                    return;
+                                                }
+                                            } else if(goblinsActive.get(i) != null){
+                                                if (attack(fireTowers[5], goblinsActive.get(i))) {
                                                     return;
                                                 }
                                             }
@@ -387,7 +371,6 @@ public class GameHelper {
                         gold -= 100;
                         fireTowers[6] = new FireTower(towers[6].getX(),
                                 towers[6].getY(), towers[6], screen);
-                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
                         towerTimer[6].scheduleAtFixedRate(new TimerTask() {
                             @Override
                             public void run() {
@@ -395,16 +378,19 @@ public class GameHelper {
 
                                     // Check if goblin is alive
                                     // Target first goblin system
-                                    if (goblinsAlive[i - 1] != 0) {
-                                        if (goblinsActive.get(i) != null) {
-                                            // TO DO:
-                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
-                                            if (fireTowers[6] != null) {
-                                                if(attack(fireTowers[6], goblinsActive.get(i))){
+                                    if (goblinsAlive[i - 1] != 0 || trollsAlive[i-1] != 0) {
+                                        if (fireTowers[6] != null) {
+                                            if(trollsActive.get(i) != null) {
+                                                if (attack(fireTowers[6], trollsActive.get(i))) {
+                                                    return;
+                                                }
+                                            } else if(goblinsActive.get(i) != null){
+                                                if (attack(fireTowers[6], goblinsActive.get(i))) {
                                                     return;
                                                 }
                                             }
                                         }
+
                                     }
                                 }
                             }
@@ -430,7 +416,6 @@ public class GameHelper {
                         gold -= 100;
                         fireTowers[7] = new FireTower(towers[7].getX(),
                                 towers[7].getY(), towers[7], screen);
-                        infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
                         towerTimer[7].scheduleAtFixedRate(new TimerTask() {
                             @Override
                             public void run() {
@@ -438,20 +423,19 @@ public class GameHelper {
 
                                     // Check if goblin is alive
                                     // Target first goblin system
-                                    if (goblinsAlive[i - 1] != 0) {
-                                        if (goblinsActive.get(i) != null) {
-                                            // TO DO:
-                                            // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
-                                            if (fireTowers[7] != null) {
-                                                if(!attack(fireTowers[7], trollsActive.get(i))) {
-                                                    if (attack(fireTowers[7], goblinsActive.get(i))) {
-                                                        return;
-                                                    }
-                                                } else {
+                                    if (goblinsAlive[i - 1] != 0 || trollsAlive[i-1] != 0) {
+                                        if (fireTowers[7] != null) {
+                                            if(trollsActive.get(i) != null) {
+                                                if (attack(fireTowers[7], trollsActive.get(i))) {
+                                                    return;
+                                                }
+                                            } else if(goblinsActive.get(i) != null){
+                                                if (attack(fireTowers[7], goblinsActive.get(i))) {
                                                     return;
                                                 }
                                             }
                                         }
+
                                     }
                                 }
                             }
@@ -490,8 +474,8 @@ public class GameHelper {
 
     final Runnable myRunnable = new Runnable() {
         public void run() {
-            System.out.println("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
-            infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
+            System.out.println("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score + "  | Wave: " + wave);
+            infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score + "  | Wave: " + wave);
         }
     };
 
@@ -521,8 +505,106 @@ public class GameHelper {
         troll2 = new Troll(context, screen, STAGE_CODE, ++waveEnemies);
         troll3 = new Troll(context, screen, STAGE_CODE, ++waveEnemies);
 
+
+        // Start waves
+        waveEnemies = 0;
         wave++;
         waveStart();
+    }
+
+    private void waveStart(){
+        // Start time of stage
+        start = System.currentTimeMillis();
+        t.cancel();
+
+        // STAGE 0101
+        if(wave == 1 && STAGE_CODE == 0101) {
+            // Set goblins for this wave
+            goblinsActive.put(++waveEnemies, gob1);
+            goblinsActive.put(++waveEnemies, gob2);
+            goblinsActive.put(++waveEnemies, gob3);
+            goblinsActive.put(++waveEnemies, gob4);
+            goblinsActive.put(++waveEnemies, gob5);
+            goblinsAlive = new int[waveEnemies];
+            trollsAlive = new int[waveEnemies];
+            for (int i = 0; i < waveEnemies; i++) {
+                goblinsAlive[i] = 1;
+                trollsAlive[i] = 0;
+            }
+            // Make sure trolls is empty
+            trollsActive.put(1, troll1);
+            trollsActive.remove(1);
+        } else if(wave == 2 && STAGE_CODE == 0101){
+            // Set goblins for this wave
+            goblinsActive.put(++waveEnemies, gob6);
+            goblinsActive.put(++waveEnemies, gob7);
+            goblinsActive.put(++waveEnemies, gob8);
+            goblinsActive.put(++waveEnemies, gob9);
+            goblinsActive.put(++waveEnemies, gob10);
+            goblinsActive.put(++waveEnemies, gob11);
+            goblinsActive.put(++waveEnemies, gob12);
+            goblinsActive.put(++waveEnemies, gob13);
+            goblinsActive.put(++waveEnemies, gob14);
+            goblinsActive.put(++waveEnemies, gob15);
+
+            goblinsAlive = new int[waveEnemies];
+            trollsAlive = new int[waveEnemies];
+            for (int i = 0; i < waveEnemies; i++) {
+                goblinsAlive[i] = 1;
+                trollsAlive[i] = 0;
+            }
+            // Make sure trolls is empty
+            trollsActive.put(1, troll1);
+            trollsActive.remove(1);
+        } else if(wave == 3 && STAGE_CODE == 0101){
+            trollsActive.put(++waveEnemies, troll1);
+            trollsActive.put(++waveEnemies, troll2);
+            trollsActive.put(++waveEnemies, troll3);
+            goblinsAlive = new int[waveEnemies];
+            trollsAlive = new int[waveEnemies];
+            for (int i = 0; i < waveEnemies; i++){
+                trollsAlive[i] = 1;
+                goblinsAlive[i] = 0;
+            }
+            // Make sure trolls is empty
+            goblinsActive.put(1, gob1);
+            goblinsActive.remove(1);
+        }
+
+        t = new Timer();
+        // Start Timing Game
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runGame();
+                System.out.println(System.currentTimeMillis() - start);
+            }
+        },
+            //Set how long before to start calling the TimerTask (in milliseconds)
+            0,
+            //Set the amount of time between each execution (in milliseconds)
+            495);
+    }
+
+    private void waveEnd(){
+        waveEnemies = 0;
+        t.cancel();
+
+        t = new Timer();
+        // Prep for next Wave
+        // Start Timer for next wave
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                wave++;
+                System.out.println("Next Wave");
+                waveStart();
+            }
+        },
+            //Set how long before to start calling the TimerTask (in milliseconds)
+            0,
+            //Set the amount of time between each execution (in milliseconds)
+            TIME_BETWEEN_WAVES);
     }
 
     private void runGame(){
@@ -562,99 +644,14 @@ public class GameHelper {
                 gob15.start();
             }
         } else if(wave == 3 && STAGE_CODE == 0101){
-
+            if (currentTime > 2005 && currentTime < 2504) {
+                troll1.start();
+            } else if (currentTime > 8005 && currentTime < 8504) {
+                troll2.start();
+            } else if (currentTime > 13005 && currentTime < 13504) {
+                troll3.start();
+            }
         }
-    }
-
-    private void waveStart(){
-        // Start time of stage
-        start = System.currentTimeMillis();
-        t.cancel();
-
-        Toast.makeText(context, "Wave start!", Toast.LENGTH_LONG).show();
-
-        // STAGE 0101
-        if(wave == 1 && STAGE_CODE == 0101) {
-            // Set goblins for this wave
-            goblinsActive.put(++waveEnemies, gob1);
-            goblinsActive.put(++waveEnemies, gob2);
-            goblinsActive.put(++waveEnemies, gob3);
-            goblinsActive.put(++waveEnemies, gob4);
-            goblinsActive.put(++waveEnemies, gob5);
-            goblinsAlive = new int[waveEnemies];
-            for (int i = 0; i < waveEnemies; i++) {
-                goblinsAlive[i] = 1;
-            }
-            // Make sure trolls is empty
-            trollsActive.put(1, troll1);
-            trollsActive.remove(1);
-        } else if(wave == 2 && STAGE_CODE == 0101){
-            // Set goblins for this wave
-            goblinsActive.put(++waveEnemies, gob6);
-            goblinsActive.put(++waveEnemies, gob7);
-            goblinsActive.put(++waveEnemies, gob8);
-            goblinsActive.put(++waveEnemies, gob9);
-            goblinsActive.put(++waveEnemies, gob10);
-            goblinsActive.put(++waveEnemies, gob11);
-            goblinsActive.put(++waveEnemies, gob12);
-            goblinsActive.put(++waveEnemies, gob13);
-            goblinsActive.put(++waveEnemies, gob14);
-            goblinsActive.put(++waveEnemies, gob15);
-
-            goblinsAlive = new int[waveEnemies];
-            for (int i = 0; i < waveEnemies; i++) {
-                goblinsAlive[i] = 1;
-            }
-            // Make sure trolls is empty
-            trollsActive.put(1, troll1);
-            trollsActive.remove(1);
-        } else if(wave == 3 && STAGE_CODE == 0101){
-            trollsActive.put(++waveEnemies, troll1);
-            trollsActive.put(++waveEnemies, troll2);
-            trollsActive.put(++waveEnemies, troll3);
-            trollsAlive = new int[waveEnemies];
-            for (int i = 0; i < waveEnemies; i++){
-                trollsAlive[i] = 1;
-            }
-            // Make sure trolls is empty
-            goblinsActive.put(1, gob1);
-            goblinsActive.remove(1);
-        }
-
-        t = new Timer();
-        // Start Timing Game
-        t.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                runGame();
-            }
-        },
-            //Set how long before to start calling the TimerTask (in milliseconds)
-            0,
-            //Set the amount of time between each execution (in milliseconds)
-            500);
-    }
-
-    private void waveEnd(){
-        System.out.println("Wave is done");
-        Toast.makeText(context, "Wave cleared!", Toast.LENGTH_LONG).show();
-        waveEnemies = 0;
-        t.cancel();
-
-        t = new Timer();
-        // Prep for next Wave
-        // Start Timer for next wave
-        t.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                wave++;
-                waveStart();
-            }
-        },
-            //Set how long before to start calling the TimerTask (in milliseconds)
-            0,
-            //Set the amount of time between each execution (in milliseconds)
-            TIME_BETWEEN_WAVES);
     }
 
     public void kill(){
@@ -686,7 +683,11 @@ public class GameHelper {
                 // 0 means goblin is dead
                 goblinsAlive[goblin.getEnemyNumber()-1] = 0;
                 // End Wave
-                if(goblinsActive.size() == 0){
+                System.out.println(goblinsActive.size());
+                System.out.println(goblinsActive.size() == 0);
+                System.out.println(trollsActive.size());
+                System.out.println(trollsActive.size() == 0);
+                if(goblinsActive.size() == 0 && trollsActive.size() == 0){
                     waveEnd();
                 }
             }
@@ -697,33 +698,36 @@ public class GameHelper {
 
     private boolean attack(FireTower tower, Troll troll){
         // Goblin Coordinates Center
-        float gobX = (troll.getX() + troll.getWidth()) / 2;
-        float gobY = (troll.getY() + troll.getHeight()) / 2;
+        float trollX = (troll.getX() + troll.getWidth()) / 2;
+        float trollY = (troll.getY() + troll.getHeight()) / 2;
         // Tower Location Center
         float centerX = (tower.returnX() + tower.getImageView().getWidth())/2;
         float centerY = (tower.returnY() + tower.getImageView().getHeight())/2;
         // Check Square Collision
         if ( // Check Horizontally
-                (gobX > centerX - tower.returnRange() &&
-                        gobX < centerX + tower.returnRange())
+                (trollX > centerX - tower.returnRange() &&
+                        trollX < centerX + tower.returnRange())
                         &&
                         // Check Vertically
-                        (gobY > centerY - tower.returnRange() &&
-                                gobY < centerY + tower.returnRange())) {
+                        (trollY > centerY - tower.returnRange() &&
+                                trollY < centerY + tower.returnRange())) {
+            System.out.println("HP: " + troll.getHP());
             if(troll.setHP(troll.getHP() - 2)){
                 // Increase score
-                gold+= 10;
-                score+= 50;
+                gold+= 25;
+                score+= 70;
                 System.out.println("Added Score and Gold");
                 // Remove goblin from active goblins
                 trollsActive.remove(troll.getEnemyNumber());
                 // 0 means goblin is dead
                 trollsAlive[troll.getEnemyNumber()-1] = 0;
                 // End Wave
-                if(goblinsActive.size() == 0){
-                    if(trollsActive.size() == 0) {
-                        waveEnd();
-                    }
+                System.out.println(goblinsActive.size());
+                System.out.println(goblinsActive.size() == 0);
+                System.out.println(trollsActive.size());
+                System.out.println(trollsActive.size() == 0);
+                if(goblinsActive.size() == 0 && trollsActive.size() == 0){
+                    waveEnd();
                 }
             }
             return true;
