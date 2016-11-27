@@ -31,7 +31,7 @@ public class Goblin {
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(30, 0, 0, 0);
-        screen.addView(iv, lp);
+        this.screen.addView(iv, lp);
     }
 
     public int getEnemyNumber(){

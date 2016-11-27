@@ -28,6 +28,7 @@ public class GameHelper {
     final Handler myHandler = new Handler();
     // Game Running
     private int STAGE_CODE;
+    final private int TIME_BETWEEN_WAVES = 5000;
     // private boolean gameRunning = true;
     // Set the timer to tick to run the game
     private Timer t = new Timer();
@@ -43,6 +44,16 @@ public class GameHelper {
     private Goblin gob3;
     private Goblin gob4;
     private Goblin gob5;
+    private Goblin gob6;
+    private Goblin gob7;
+    private Goblin gob8;
+    private Goblin gob9;
+    private Goblin gob10;
+    private Goblin gob11;
+    private Goblin gob12;
+    private Goblin gob13;
+    private Goblin gob14;
+    private Goblin gob15;
 
     // Towers
     private FireTower fireTowers[] = new FireTower[8];
@@ -452,6 +463,7 @@ public class GameHelper {
     private void updateInfoBar(){
         myHandler.post(myRunnable);
     }
+
     final Runnable myRunnable = new Runnable() {
         public void run() {
             System.out.println("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score);
@@ -478,12 +490,35 @@ public class GameHelper {
             } else if (currentTime > 14005 && currentTime < 14504) {
                 gob5.start();
             }
+        } else if(wave == 2){
+            if (currentTime > 2005 && currentTime < 2504) {
+                gob6.start();
+            } else if (currentTime > 5005 && currentTime < 5504) {
+                gob7.start();
+            } else if (currentTime > 8005 && currentTime < 8504) {
+                gob8.start();
+            } else if (currentTime > 11005 && currentTime < 11504) {
+                gob9.start();
+            } else if (currentTime > 14005 && currentTime < 14504) {
+                gob10.start();
+            } else if (currentTime > 17005 && currentTime < 17504) {
+                gob11.start();
+            } else if (currentTime > 20005 && currentTime < 20504) {
+                gob12.start();
+            } else if (currentTime > 23005 && currentTime < 23504) {
+                gob13.start();
+            } else if (currentTime > 26005 && currentTime < 26504) {
+                gob14.start();
+            } else if (currentTime > 29005 && currentTime < 29504) {
+                gob15.start();
+            }
         }
     }
 
     private void waveStart(){
         // Start time of stage
         start = System.currentTimeMillis();
+        t.cancel();
 
         if(wave == 1) {
             // Create the goblins
@@ -502,8 +537,36 @@ public class GameHelper {
             for (int i = 0; i < waveEnemies; i++) {
                 goblinsAlive[i] = 1;
             }
+        } else if(wave == 2){
+            // Create the goblins
+            gob6 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob6);
+            gob7 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob7);
+            gob8 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob8);
+            gob9 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob9);
+            gob10 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob10);
+            gob11 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob11);
+            gob12 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob12);
+            gob13 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob13);
+            gob14 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob14);
+            gob15 = new Goblin(context, screen, 0101, ++waveEnemies);
+            goblinsActive.put(waveEnemies, gob15);
+
+            goblinsAlive = new int[waveEnemies];
+            for (int i = 0; i < waveEnemies; i++) {
+                goblinsAlive[i] = 1;
+            }
         }
 
+        t = new Timer();
         // Start Timing Game
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -521,6 +584,21 @@ public class GameHelper {
         System.out.println("Wave is done");
         waveEnemies = 0;
         t.cancel();
+
+        t = new Timer();
+        // Prep for next Wave
+        // Start Timer for next wave
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                wave++;
+                waveStart();
+            }
+        },
+            //Set how long before to start calling the TimerTask (in milliseconds)
+            0,
+            //Set the amount of time between each execution (in milliseconds)
+            TIME_BETWEEN_WAVES);
     }
 
     public void kill(){
