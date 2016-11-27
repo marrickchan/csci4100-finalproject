@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class GameHelper {
     private Goblin gob3;
     private Goblin gob4;
     private Goblin gob5;
+    // Goblin Wave 2
     private Goblin gob6;
     private Goblin gob7;
     private Goblin gob8;
@@ -54,6 +56,10 @@ public class GameHelper {
     private Goblin gob13;
     private Goblin gob14;
     private Goblin gob15;
+    // Troll Wave 3
+    private Troll troll1;
+    private Troll troll2;
+    private Troll troll3;
 
     // Towers
     private FireTower fireTowers[] = new FireTower[8];
@@ -65,6 +71,8 @@ public class GameHelper {
     // Wave Management
     private Map<Integer, Goblin> goblinsActive = new HashMap<Integer, Goblin>();
     private int[] goblinsAlive;
+    private Map<Integer, Troll> trollsActive = new HashMap<Integer, Troll>();
+    private int[] trollsAlive;
     private int wave = 0;
     private int waveEnemies = 0;
 
@@ -161,8 +169,14 @@ public class GameHelper {
                                             // TO DO:
                                             // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
                                             if (fireTowers[1] != null) {
-                                                if(attack(fireTowers[1], goblinsActive.get(i))){
-                                                    return;
+                                                if(trollsActive.get(i) != null) {
+                                                    if (attack(fireTowers[3], trollsActive.get(i))) {
+                                                        return;
+                                                    }
+                                                } else if(goblinsActive.get(i) != null){
+                                                    if (attack(fireTowers[3], goblinsActive.get(i))) {
+                                                        return;
+                                                    }
                                                 }
                                             }
                                         }
@@ -250,8 +264,14 @@ public class GameHelper {
                                             // TO DO:
                                             // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
                                             if (fireTowers[3] != null) {
-                                                if(attack(fireTowers[3], goblinsActive.get(i))){
-                                                    return;
+                                                if(trollsActive.get(i) != null) {
+                                                    if (attack(fireTowers[3], trollsActive.get(i))) {
+                                                        return;
+                                                    }
+                                                } else if(goblinsActive.get(i) != null){
+                                                    if (attack(fireTowers[3], goblinsActive.get(i))) {
+                                                        return;
+                                                    }
                                                 }
                                             }
                                         }
@@ -423,7 +443,11 @@ public class GameHelper {
                                             // TO DO:
                                             // TO ADD, LOOP THROUGH TOWERS AND THEIR TARGET GOBLINS
                                             if (fireTowers[7] != null) {
-                                                if(attack(fireTowers[7], goblinsActive.get(i))){
+                                                if(!attack(fireTowers[7], trollsActive.get(i))) {
+                                                    if (attack(fireTowers[7], goblinsActive.get(i))) {
+                                                        return;
+                                                    }
+                                                } else {
                                                     return;
                                                 }
                                             }
@@ -472,13 +496,38 @@ public class GameHelper {
     };
 
     private void startGame(){
+        // Create all goblins
+        // Wave 1
+        gob1 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob2 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob3 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob4 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob5 = new Goblin(context, screen, 0101, ++waveEnemies);
+        // Wave 2
+        waveEnemies = 0;
+        gob6 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob7 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob8 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob9 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob10 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob11 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob12 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob13 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob14 = new Goblin(context, screen, 0101, ++waveEnemies);
+        gob15 = new Goblin(context, screen, 0101, ++waveEnemies);
+        // Wave 3
+        waveEnemies = 0;
+        troll1 = new Troll(context, screen, STAGE_CODE, ++waveEnemies);
+        troll2 = new Troll(context, screen, STAGE_CODE, ++waveEnemies);
+        troll3 = new Troll(context, screen, STAGE_CODE, ++waveEnemies);
+
         wave++;
         waveStart();
     }
 
     private void runGame(){
         long currentTime = System.currentTimeMillis() - start;
-        if(wave == 1) {
+        if(wave == 1 && STAGE_CODE == 0101) {
             if (currentTime > 2005 && currentTime < 2504) {
                 gob1.start();
             } else if (currentTime > 5005 && currentTime < 5504) {
@@ -490,7 +539,7 @@ public class GameHelper {
             } else if (currentTime > 14005 && currentTime < 14504) {
                 gob5.start();
             }
-        } else if(wave == 2){
+        } else if(wave == 2 && STAGE_CODE == 0101){
             if (currentTime > 2005 && currentTime < 2504) {
                 gob6.start();
             } else if (currentTime > 5005 && currentTime < 5504) {
@@ -512,6 +561,8 @@ public class GameHelper {
             } else if (currentTime > 29005 && currentTime < 29504) {
                 gob15.start();
             }
+        } else if(wave == 3 && STAGE_CODE == 0101){
+
         }
     }
 
@@ -520,50 +571,54 @@ public class GameHelper {
         start = System.currentTimeMillis();
         t.cancel();
 
-        if(wave == 1) {
-            // Create the goblins
-            gob1 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob1);
-            gob2 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob2);
-            gob3 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob3);
-            gob4 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob4);
-            gob5 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob5);
+        Toast.makeText(context, "Wave start!", Toast.LENGTH_LONG).show();
+
+        // STAGE 0101
+        if(wave == 1 && STAGE_CODE == 0101) {
+            // Set goblins for this wave
+            goblinsActive.put(++waveEnemies, gob1);
+            goblinsActive.put(++waveEnemies, gob2);
+            goblinsActive.put(++waveEnemies, gob3);
+            goblinsActive.put(++waveEnemies, gob4);
+            goblinsActive.put(++waveEnemies, gob5);
+            goblinsAlive = new int[waveEnemies];
+            for (int i = 0; i < waveEnemies; i++) {
+                goblinsAlive[i] = 1;
+            }
+            // Make sure trolls is empty
+            trollsActive.put(1, troll1);
+            trollsActive.remove(1);
+        } else if(wave == 2 && STAGE_CODE == 0101){
+            // Set goblins for this wave
+            goblinsActive.put(++waveEnemies, gob6);
+            goblinsActive.put(++waveEnemies, gob7);
+            goblinsActive.put(++waveEnemies, gob8);
+            goblinsActive.put(++waveEnemies, gob9);
+            goblinsActive.put(++waveEnemies, gob10);
+            goblinsActive.put(++waveEnemies, gob11);
+            goblinsActive.put(++waveEnemies, gob12);
+            goblinsActive.put(++waveEnemies, gob13);
+            goblinsActive.put(++waveEnemies, gob14);
+            goblinsActive.put(++waveEnemies, gob15);
 
             goblinsAlive = new int[waveEnemies];
             for (int i = 0; i < waveEnemies; i++) {
                 goblinsAlive[i] = 1;
             }
-        } else if(wave == 2){
-            // Create the goblins
-            gob6 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob6);
-            gob7 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob7);
-            gob8 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob8);
-            gob9 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob9);
-            gob10 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob10);
-            gob11 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob11);
-            gob12 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob12);
-            gob13 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob13);
-            gob14 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob14);
-            gob15 = new Goblin(context, screen, 0101, ++waveEnemies);
-            goblinsActive.put(waveEnemies, gob15);
-
-            goblinsAlive = new int[waveEnemies];
-            for (int i = 0; i < waveEnemies; i++) {
-                goblinsAlive[i] = 1;
+            // Make sure trolls is empty
+            trollsActive.put(1, troll1);
+            trollsActive.remove(1);
+        } else if(wave == 3 && STAGE_CODE == 0101){
+            trollsActive.put(++waveEnemies, troll1);
+            trollsActive.put(++waveEnemies, troll2);
+            trollsActive.put(++waveEnemies, troll3);
+            trollsAlive = new int[waveEnemies];
+            for (int i = 0; i < waveEnemies; i++){
+                trollsAlive[i] = 1;
             }
+            // Make sure trolls is empty
+            goblinsActive.put(1, gob1);
+            goblinsActive.remove(1);
         }
 
         t = new Timer();
@@ -582,6 +637,7 @@ public class GameHelper {
 
     private void waveEnd(){
         System.out.println("Wave is done");
+        Toast.makeText(context, "Wave cleared!", Toast.LENGTH_LONG).show();
         waveEnemies = 0;
         t.cancel();
 
@@ -612,7 +668,6 @@ public class GameHelper {
         // Tower Location Center
         float centerX = (tower.returnX() + tower.getImageView().getWidth())/2;
         float centerY = (tower.returnY() + tower.getImageView().getHeight())/2;
-
         // Check Square Collision
         if ( // Check Horizontally
                 (gobX > centerX - tower.returnRange() &&
@@ -621,8 +676,6 @@ public class GameHelper {
                         // Check Vertically
                         (gobY > centerY - tower.returnRange() &&
                                 gobY < centerY + tower.returnRange())) {
-
-
             if(goblin.setHP(goblin.getHP() - 2)){
                 // Increase score
                 gold+= 10;
@@ -636,7 +689,42 @@ public class GameHelper {
                 if(goblinsActive.size() == 0){
                     waveEnd();
                 }
+            }
+            return true;
+        }
+        return false;
+    }
 
+    private boolean attack(FireTower tower, Troll troll){
+        // Goblin Coordinates Center
+        float gobX = (troll.getX() + troll.getWidth()) / 2;
+        float gobY = (troll.getY() + troll.getHeight()) / 2;
+        // Tower Location Center
+        float centerX = (tower.returnX() + tower.getImageView().getWidth())/2;
+        float centerY = (tower.returnY() + tower.getImageView().getHeight())/2;
+        // Check Square Collision
+        if ( // Check Horizontally
+                (gobX > centerX - tower.returnRange() &&
+                        gobX < centerX + tower.returnRange())
+                        &&
+                        // Check Vertically
+                        (gobY > centerY - tower.returnRange() &&
+                                gobY < centerY + tower.returnRange())) {
+            if(troll.setHP(troll.getHP() - 2)){
+                // Increase score
+                gold+= 10;
+                score+= 50;
+                System.out.println("Added Score and Gold");
+                // Remove goblin from active goblins
+                trollsActive.remove(troll.getEnemyNumber());
+                // 0 means goblin is dead
+                trollsAlive[troll.getEnemyNumber()-1] = 0;
+                // End Wave
+                if(goblinsActive.size() == 0){
+                    if(trollsActive.size() == 0) {
+                        waveEnd();
+                    }
+                }
             }
             return true;
         }
