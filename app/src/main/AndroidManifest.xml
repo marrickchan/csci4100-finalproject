@@ -22,6 +22,7 @@
             android:label="@string/highscoreTitle"
             android:theme="@style/AppTheme" />
         <activity android:name=".World1Stage1" />
+        <activity android:name=".Login"></activity>
     </application>
 
 </manifest>

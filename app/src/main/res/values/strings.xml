@@ -7,6 +7,9 @@
     <string name="instructionsButton">Instructions</string>
     <string name="highScoreButton">High Scores</string>
     <string name="exitButton">Exit Game</string>
+    <string name="loginButton">Login</string>
+    <string name="username">Username: </string>
+    <string name="loggedOutStatus">Please Log in before starting game.</string>
 
     <!-- Level select Screen -->
     <string name="w1s1">World 1 - Stage 1</string>
