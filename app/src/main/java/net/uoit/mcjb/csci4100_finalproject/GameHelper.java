@@ -96,13 +96,6 @@ public class GameHelper {
         this.context = context;
         this.STAGE_CODE = STAGE_CODE;
 
-        // TODO:
-        // Change these to the right sounds
-        goblinSpawnSound = MediaPlayer.create(context, R.raw.fireball);
-        goblinDeathSound = MediaPlayer.create(context, R.raw.fireball);
-        trollSpawnSound = MediaPlayer.create(context, R.raw.fireball);
-        trollDeathSound = MediaPlayer.create(context, R.raw.fireball);
-
         // Initialize Information Bar
         infoBar = (TextView)screen.findViewById(R.id.infoBar);
         // Towers all FALSE built
@@ -689,7 +682,50 @@ public class GameHelper {
             public void onCompletion(MediaPlayer fireballSound) {
                 fireballSound.release();
             }
+        });
+    }
+    private void goblinSpawnSound(){
+        goblinSpawnSound = MediaPlayer.create(context, R.raw.goblinspawn);
+        goblinSpawnSound.start();
+        goblinSpawnSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
+            @Override
+            public void onCompletion(MediaPlayer fireballSound) {
+                goblinSpawnSound.release();
+            }
+        });
+    }
+    private void goblinDeathSound(){
+        goblinDeathSound = MediaPlayer.create(context, R.raw.goblindeath);
+        goblinDeathSound.start();
+        goblinDeathSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer fireballSound) {
+                goblinDeathSound.release();
+            }
+        });
+    }
+    private void trollSpawnSound(){
+        trollSpawnSound = MediaPlayer.create(context, R.raw.trollspawn);
+        trollSpawnSound.start();
+        trollSpawnSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer fireballSound) {
+                trollSpawnSound.release();
+            }
+        });
+    }
+    private void trollDeathSound(){
+        trollDeathSound = MediaPlayer.create(context, R.raw.trolldeath);
+        trollDeathSound.start();
+        trollDeathSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer fireballSound) {
+                trollDeathSound.release();
+            }
         });
     }
 
@@ -882,44 +918,62 @@ public class GameHelper {
         if(wave == 1 && STAGE_CODE == 0101) {
             if (currentTime > 2005 && currentTime < 2504) {
                 gob1.start();
+                goblinSpawnSound();
             } else if (currentTime > 5005 && currentTime < 5504) {
                 gob2.start();
+                goblinSpawnSound();
             } else if (currentTime > 8005 && currentTime < 8504) {
                 gob3.start();
+                goblinSpawnSound();
             } else if (currentTime > 11005 && currentTime < 11504) {
                 gob4.start();
+                goblinSpawnSound();
             } else if (currentTime > 14005 && currentTime < 14504) {
                 gob5.start();
+                goblinSpawnSound();
             }
         } else if(wave == 2 && STAGE_CODE == 0101){
             if (currentTime > 2005 && currentTime < 2504) {
                 gob6.start();
+                goblinSpawnSound();
             } else if (currentTime > 5005 && currentTime < 5504) {
                 gob7.start();
+                goblinSpawnSound();
             } else if (currentTime > 8005 && currentTime < 8504) {
                 gob8.start();
+                goblinSpawnSound();
             } else if (currentTime > 11005 && currentTime < 11504) {
                 gob9.start();
+                goblinSpawnSound();
             } else if (currentTime > 14005 && currentTime < 14504) {
                 gob10.start();
+                goblinSpawnSound();
             } else if (currentTime > 17005 && currentTime < 17504) {
                 gob11.start();
+                goblinSpawnSound();
             } else if (currentTime > 20005 && currentTime < 20504) {
                 gob12.start();
+                goblinSpawnSound();
             } else if (currentTime > 23005 && currentTime < 23504) {
                 gob13.start();
+                goblinSpawnSound();
             } else if (currentTime > 26005 && currentTime < 26504) {
                 gob14.start();
+                goblinSpawnSound();
             } else if (currentTime > 29005 && currentTime < 29504) {
                 gob15.start();
+                goblinSpawnSound();
             }
         } else if(wave == 3 && STAGE_CODE == 0101){
             if (currentTime > 2005 && currentTime < 2504) {
                 troll1.start();
+                trollSpawnSound();
             } else if (currentTime > 8005 && currentTime < 8504) {
                 troll2.start();
+                trollSpawnSound();
             } else if (currentTime > 13005 && currentTime < 13504) {
                 troll3.start();
+                trollSpawnSound();
             }
         }
     }
@@ -945,6 +999,7 @@ public class GameHelper {
                                 gobY < centerY + tower.returnRange())) {
             // goblin.setHP will return true if dead
             if(goblin.setHP(goblin.getHP() - 2)){
+                goblinDeathSound();
                 // Increase score and gold
                 gold+= 10;
                 score+= 50;
@@ -979,6 +1034,7 @@ public class GameHelper {
                                 trollY < centerY + tower.returnRange())) {
             // troll.setHP will return true if dead
             if(troll.setHP(troll.getHP() - 2)){
+                trollDeathSound();
                 // Increase score and gold
                 gold+= 25;
                 score+= 70;

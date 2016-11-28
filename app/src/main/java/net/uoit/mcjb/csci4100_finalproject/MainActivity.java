@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // Set the logo for the main menu
         // TODO: Set the logo on the main menu
         ImageView logoMainScreen = (ImageView) findViewById(R.id.logo_MainScreen);
+        logoMainScreen.setImageResource(R.drawable.logo);
 
         // Login/Logout button
         logButton.setOnClickListener(new View.OnClickListener() {
