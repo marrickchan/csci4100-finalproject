@@ -473,11 +473,18 @@ public class GameHelper {
         infoBarTimer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
+
+
+
                 updateInfoBar();
+
+
                 // If no lives
                 if(checkLives()){
                     endGame();
                 }
+
+
             }
         }, 0, 500);
 

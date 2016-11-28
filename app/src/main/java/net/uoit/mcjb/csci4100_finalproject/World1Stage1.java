@@ -56,8 +56,6 @@ public class World1Stage1 extends AppCompatActivity {
                     // TODO:
                     // Sheron to add scores into database
                     finalScore = w1s1Helper.getFinalScore();
-
-                    Toast.makeText(getApplicationContext(), "Your final score: " + finalScore, Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
