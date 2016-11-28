@@ -33,7 +33,7 @@ public class Signup extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if (firebaseAuth.getCurrentUser() != null) {
+        if (firebaseAuth.getCurrentUser() == null) {
             finish();
         }
 
@@ -48,7 +48,6 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerUser();
-                finish();
             }
         });
 
@@ -83,6 +82,7 @@ public class Signup extends AppCompatActivity {
             return;
         }
 
+        progressDialog = new ProgressDialog(Signup.this);
         progressDialog.setMessage("Registering User...");
         progressDialog.show();
 
@@ -91,6 +91,7 @@ public class Signup extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            progressDialog.dismiss();
                             finish();
                             Toast.makeText(Signup.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
 
