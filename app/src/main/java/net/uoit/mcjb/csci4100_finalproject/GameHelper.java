@@ -511,7 +511,6 @@ public class GameHelper {
 
     public boolean dead(){
         if(stageComplete){
-            infoBarTimer.cancel();
             for(int i = 0; i < towerTimer.length; i++){
                 towerTimer[i].cancel();
             }
@@ -681,14 +680,32 @@ public class GameHelper {
     }
 
     private void endGame(){
+        infoBarTimer.cancel();
         t.cancel();
+
+        System.out.println("End Game");
         // Wave 1
+        gob1.stop();
+        gob2.stop();
+        gob3.stop();
+        gob4.stop();
+        gob5.stop();
         gob1 = null;
         gob2 = null;
         gob3 = null;
         gob4 = null;
         gob5 = null;
         // Wave 2
+        gob6.stop();
+        gob7.stop();
+        gob8.stop();
+        gob9.stop();
+        gob10.stop();
+        gob11.stop();
+        gob12.stop();
+        gob13.stop();
+        gob14.stop();
+        gob15.stop();
         gob6 = null;
         gob7 = null;
         gob8 = null;
@@ -700,6 +717,9 @@ public class GameHelper {
         gob14 = null;
         gob15 = null;
         // Wave 3
+        troll1.stop();
+        troll2.stop();
+        troll3.stop();
         troll1 = null;
         troll2 = null;
         troll3 = null;

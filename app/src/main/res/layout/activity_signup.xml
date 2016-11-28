@@ -48,12 +48,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <!-- Don't need button since they come from that screen
         <TextView
             android:textAlignment="center"
             android:text="Already Registerd? Sign in here"
             android:id="@+id/textViewSignin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+            -->
 
     </LinearLayout>
 </RelativeLayout>

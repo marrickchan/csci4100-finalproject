@@ -62,11 +62,10 @@ public class World1Stage1 extends AppCompatActivity {
         }, 0, 500);
     }
 
-    public void onStop(){
+    @Override
+    public void onBackPressed(){
         System.out.println("Closed Stage 1");
         w1s1Helper.kill();
         finish();
-
-        super.onStop();
     }
 }

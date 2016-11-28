@@ -51,6 +51,7 @@ public class Signup extends AppCompatActivity {
             }
         });
 
+        /*
         signinTextView = (TextView) findViewById(R.id.textViewSignin);
         signinTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +59,7 @@ public class Signup extends AppCompatActivity {
                 finish();
                 startActivity(new Intent(Signup.this, Login.class));
             }
-        });
+        }); */
     }
 
     private void registerUser() {

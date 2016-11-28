@@ -118,6 +118,10 @@ public class Troll {
         return false;
     }
 
+    public void stop(){
+        t.cancel();
+    }
+
     public int getHP(){
         return trollHP;
     }
