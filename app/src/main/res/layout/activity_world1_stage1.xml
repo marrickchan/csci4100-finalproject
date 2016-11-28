@@ -9,8 +9,9 @@
 
     <!-- Resources -->
     <TextView
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
         android:layout_height="30dp"
         android:textAlignment="center"
         android:id="@+id/infoBar"/>
@@ -19,7 +20,7 @@
     <ImageView
         android:layout_marginTop="20dp"
         android:layout_marginLeft="70dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/infoBar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@color/colorAccent"
@@ -27,7 +28,7 @@
     <ImageView
         android:layout_marginTop="20dp"
         android:layout_marginRight="70dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/infoBar"
         android:layout_alignParentEnd="true"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -95,7 +96,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/infoBar"
+        android:layout_alignParentBottom="true"
         android:text="@string/startRound"
         android:id="@+id/startRoundw1s1"/>
 

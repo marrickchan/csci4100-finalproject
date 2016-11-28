@@ -17,6 +17,7 @@ public class Troll {
     private ImageView iv;
     private RelativeLayout screen;
     private int currentStage;
+    private boolean dead = false;
     Timer t = new Timer();
     private int enemyNumber; // Number of enemy position in wave (used for troll deletion/score)
 
@@ -135,6 +136,13 @@ public class Troll {
         return false;
     }
 
+    public int getDeath(){
+        if((trollHP <= 0 || iv.getY() > 1280) && !dead){
+            dead = true;
+            return -1;
+        }
+        return 0;
+    }
 
     public ImageView getImageView(){
         return iv;

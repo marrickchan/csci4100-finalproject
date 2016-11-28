@@ -12,11 +12,12 @@ import java.util.TimerTask;
  */
 
 public class Goblin {
-    final private float moveSpeed = 10.0f;
+    final private float moveSpeed = 15.0f;
     private int goblinHP = 5;
     private ImageView iv;
     private RelativeLayout screen;
     private int currentStage;
+    private boolean dead = false;
     Timer t = new Timer();
     private int enemyNumber; // Number of enemy position in wave (used for goblin deletion/score)
 
@@ -89,7 +90,7 @@ public class Goblin {
             // If reaches the end, REMOVE A LIFE
             // TODO:
             // REMOVE A LIFE
-            if(ycoord > 1280){
+            if(ycoord > 1380){
                 kill();
                 return true;
             // Last turn into exit (+y)
@@ -133,6 +134,14 @@ public class Goblin {
             return true;
         }
         return false;
+    }
+
+    public int getDeath(){
+        if((goblinHP <= 0 || iv.getY() > 1330) && !dead){
+            dead = true;
+            return -1;
+        }
+        return 0;
     }
 
 

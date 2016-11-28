@@ -28,6 +28,8 @@ public class GameHelper {
     private TextView infoBar;
     private Timer infoBarTimer = new Timer();
     final Handler myHandler = new Handler();
+    private Timer lifeTimer = new Timer();
+    final Handler lifeHandler = new Handler();
     // Game Running
     private int STAGE_CODE;
     final private int TIME_BETWEEN_WAVES = 5000;
@@ -473,9 +475,7 @@ public class GameHelper {
         infoBarTimer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-
                 updateInfoBar();
-
 
                 // If no lives
                 if(checkLives()){
@@ -534,6 +534,119 @@ public class GameHelper {
         }
     };
 
+    private void enemyLifeCheck(){
+        lifeHandler.post(lifeRunnable);
+    }
+
+    final Runnable lifeRunnable = new Runnable(){
+        public void run() {
+            int g1 = 0, g2 = 0, g3 = 0, g4 = 0, g5 = 0;
+            int g6 = 0, g7 = 0, g8 = 0, g9 = 0, g10 = 0, g11 = 0, g12 = 0, g13 = 0, g14 = 0, g15 = 0;
+            int t1 = 0, t2 = 0, t3 = 0;
+            if(gob1 != null)
+                g1 = gob1.getDeath();
+            if(gob2 != null)
+                g2 = gob2.getDeath();
+            if(gob3 != null)
+                g3 = gob3.getDeath();
+            if(gob4 != null)
+                g4 = gob4.getDeath();
+            if(gob5 != null)
+                g5 = gob5.getDeath();
+            if(gob6 != null)
+                g6 = gob6.getDeath();
+            if(gob7 != null)
+                g7 = gob7.getDeath();
+            if(gob8 != null)
+                g8 = gob8.getDeath();
+            if(gob9 != null)
+                g9 = gob9.getDeath();
+            if(gob10 != null)
+                g10 = gob10.getDeath();
+            if(gob11 != null)
+                g11 = gob11.getDeath();
+            if(gob12 != null)
+                g12 = gob12.getDeath();
+            if(gob13 != null)
+                g13 = gob13.getDeath();
+            if(gob14 != null)
+                g14 = gob14.getDeath();
+            if(gob15 != null)
+                g15 = gob15.getDeath();
+            if(troll1 != null)
+                t1 = troll1.getDeath();
+            if(troll2 != null)
+                t2 = troll2.getDeath();
+            if(troll3 != null)
+                t3 = troll3.getDeath();
+
+
+            lives = lives +
+                    g1 + g2 + g3 + g4 + g5 +
+                    g6 + g7 + g8 + g9 + g10 + g11 + g12 + g13 + g14 + g15 +
+                    t1 + t2 + t3;
+
+            if (g1 == -1) {
+                killEnemy(gob1);
+            } else if (g2 == -1){
+                killEnemy(gob2);
+            } else if (g3 == -1){
+                killEnemy(gob3);
+            } else if (g4 == -1){
+                killEnemy(gob4);
+            } else if (g5 == -1){
+                killEnemy(gob5);
+            } else if (g6 == -1){
+                killEnemy(gob6);
+            } else if (g7 == -1){
+                killEnemy(gob7);
+            } else if (g8 == -1){
+                killEnemy(gob8);
+            } else if (g9 == -1){
+                killEnemy(gob9);
+            } else if (g10 == -1){
+                killEnemy(gob10);
+            } else if (g11 == -1){
+                killEnemy(gob11);
+            } else if (g12 == -1){
+                killEnemy(gob12);
+            } else if (g13 == -1){
+                killEnemy(gob13);
+            } else if (g14 == -1){
+                killEnemy(gob14);
+            } else if (g15 == -1){
+                killEnemy(gob15);
+            } else if (t1 == -1){
+                killEnemy(troll1);
+            } else if (t2 == -1){
+                killEnemy(troll2);
+            } else if (t3 == -1){
+                killEnemy(troll3);
+            }
+        }
+    };
+
+    private void killEnemy(Goblin gob){
+        // Remove troll from active trolls
+        goblinsActive.remove(gob.getEnemyNumber());
+        // 0 means troll is dead, setting troll to dead
+        goblinsAlive[gob.getEnemyNumber()-1] = 0;
+        // End Wave if no more goblins or trolls alive
+        if(goblinsActive.size() == 0 && trollsActive.size() == 0){
+            waveEnd();
+        }
+    }
+    private void killEnemy(Troll troll){
+        // Remove troll from active trolls
+        trollsActive.remove(troll.getEnemyNumber());
+        // 0 means troll is dead, setting troll to dead
+        trollsAlive[troll.getEnemyNumber()-1] = 0;
+        // End Wave if no more goblins or trolls alive
+        if(goblinsActive.size() == 0 && trollsActive.size() == 0){
+            waveEnd();
+        }
+    }
+
     private void attackSound(){
         MediaPlayer mp = MediaPlayer.create(context, R.raw.fireball);
         mp.start();
@@ -573,6 +686,14 @@ public class GameHelper {
         troll2 = new Troll(context, screen, STAGE_CODE, ++waveEnemies);
         troll3 = new Troll(context, screen, STAGE_CODE, ++waveEnemies);
 
+
+        // Timer for checking lives
+        lifeTimer.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run(){
+                enemyLifeCheck();
+            }
+        }, 0, 100);
 
         // Start waves
         waveEnemies = 0;
@@ -645,7 +766,6 @@ public class GameHelper {
             @Override
             public void run() {
                 runGame();
-                System.out.println(System.currentTimeMillis() - start);
             }
         },
             //Set how long before to start calling the TimerTask (in milliseconds)
@@ -669,7 +789,6 @@ public class GameHelper {
             @Override
             public void run() {
                 wave++;
-                System.out.println("Next Wave");
                 waveStart();
             }
         },
@@ -683,7 +802,6 @@ public class GameHelper {
         infoBarTimer.cancel();
         t.cancel();
 
-        System.out.println("End Game");
         // Wave 1
         gob1.stop();
         gob2.stop();
@@ -797,7 +915,6 @@ public class GameHelper {
                 // Increase score and gold
                 gold+= 10;
                 score+= 50;
-                System.out.println("Added Score and Gold");
                 // Remove goblin from active goblins
                 goblinsActive.remove(goblin.getEnemyNumber());
                 // 0 means goblin is dead, setting goblin to dead
@@ -832,7 +949,6 @@ public class GameHelper {
                 // Increase score and gold
                 gold+= 25;
                 score+= 70;
-                System.out.println("Added Score and Gold");
                 // Remove troll from active trolls
                 trollsActive.remove(troll.getEnemyNumber());
                 // 0 means troll is dead, setting troll to dead
