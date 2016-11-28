@@ -474,8 +474,6 @@ public class GameHelper {
             @Override
             public void run(){
 
-
-
                 updateInfoBar();
 
 
