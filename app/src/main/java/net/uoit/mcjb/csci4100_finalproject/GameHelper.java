@@ -2,6 +2,7 @@ package net.uoit.mcjb.csci4100_finalproject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
@@ -75,6 +76,10 @@ public class GameHelper {
     private int[] trollsAlive;
     private int wave = 0;
     private int waveEnemies = 0;
+    // Postgame
+    // After last wave
+    private int lastWave = 4;
+    private boolean stageComplete = false;
 
     public GameHelper(final Context context, final RelativeLayout screen, final ImageView[] towers, int STAGE_CODE){
         this.screen = screen;
@@ -115,10 +120,12 @@ public class GameHelper {
                                           if (fireTowers[0] != null) {
                                               if(trollsActive.get(i) != null) {
                                                   if (attack(fireTowers[0], trollsActive.get(i))) {
+                                                      attackSound();
                                                       return;
                                                   }
                                               } else if(goblinsActive.get(i) != null){
                                                   if (attack(fireTowers[0], goblinsActive.get(i))) {
+                                                      attackSound();
                                                       return;
                                                   }
                                               }
@@ -161,10 +168,12 @@ public class GameHelper {
                                         if (fireTowers[1] != null) {
                                             if(trollsActive.get(i) != null) {
                                                 if (attack(fireTowers[1], trollsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             } else if(goblinsActive.get(i) != null){
                                                 if (attack(fireTowers[1], goblinsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             }
@@ -206,10 +215,12 @@ public class GameHelper {
                                         if (fireTowers[2] != null) {
                                             if(trollsActive.get(i) != null) {
                                                 if (attack(fireTowers[2], trollsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             } else if(goblinsActive.get(i) != null){
                                                 if (attack(fireTowers[2], goblinsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             }
@@ -249,10 +260,12 @@ public class GameHelper {
                                         if (fireTowers[3] != null) {
                                             if(trollsActive.get(i) != null) {
                                                 if (attack(fireTowers[3], trollsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             } else if(goblinsActive.get(i) != null){
                                                 if (attack(fireTowers[3], goblinsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             }
@@ -293,10 +306,12 @@ public class GameHelper {
                                         if (fireTowers[4] != null) {
                                             if(trollsActive.get(i) != null) {
                                                 if (attack(fireTowers[4], trollsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             } else if(goblinsActive.get(i) != null){
                                                 if (attack(fireTowers[4], goblinsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             }
@@ -338,10 +353,12 @@ public class GameHelper {
                                         if (fireTowers[5] != null) {
                                             if(trollsActive.get(i) != null) {
                                                 if (attack(fireTowers[5], trollsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             } else if(goblinsActive.get(i) != null){
                                                 if (attack(fireTowers[5], goblinsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             }
@@ -382,10 +399,12 @@ public class GameHelper {
                                         if (fireTowers[6] != null) {
                                             if(trollsActive.get(i) != null) {
                                                 if (attack(fireTowers[6], trollsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             } else if(goblinsActive.get(i) != null){
                                                 if (attack(fireTowers[6], goblinsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             }
@@ -427,10 +446,12 @@ public class GameHelper {
                                         if (fireTowers[7] != null) {
                                             if(trollsActive.get(i) != null) {
                                                 if (attack(fireTowers[7], trollsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             } else if(goblinsActive.get(i) != null){
                                                 if (attack(fireTowers[7], goblinsActive.get(i))) {
+                                                    attackSound();
                                                     return;
                                                 }
                                             }
@@ -453,6 +474,10 @@ public class GameHelper {
             @Override
             public void run(){
                 updateInfoBar();
+                // If no lives
+                if(checkLives()){
+                    endGame();
+                }
             }
         }, 0, 500);
 
@@ -468,6 +493,32 @@ public class GameHelper {
         });
     }
 
+    private void chooseTower(){
+
+    }
+
+    private boolean checkLives(){
+        if(lives <= 0){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean dead(){
+        if(stageComplete){
+            infoBarTimer.cancel();
+            for(int i = 0; i < towerTimer.length; i++){
+                towerTimer[i].cancel();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public int getFinalScore(){
+        return score;
+    }
+
     private void updateInfoBar(){
         myHandler.post(myRunnable);
     }
@@ -478,6 +529,19 @@ public class GameHelper {
             infoBar.setText("Lives: " + lives + "  | Gold: " + gold + "  | Score: " + score + "  | Wave: " + wave);
         }
     };
+
+    private void attackSound(){
+        MediaPlayer mp = MediaPlayer.create(context, R.raw.fireball);
+        mp.start();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+
+        });
+    }
 
     private void startGame(){
         // Create all goblins
@@ -589,6 +653,10 @@ public class GameHelper {
     private void waveEnd(){
         waveEnemies = 0;
         t.cancel();
+        // If last wave, end game
+        if(wave+1 == lastWave){
+            endGame();
+        }
 
         t = new Timer();
         // Prep for next Wave
@@ -605,6 +673,32 @@ public class GameHelper {
             0,
             //Set the amount of time between each execution (in milliseconds)
             TIME_BETWEEN_WAVES);
+    }
+
+    private void endGame(){
+        t.cancel();
+        // Wave 1
+        gob1 = null;
+        gob2 = null;
+        gob3 = null;
+        gob4 = null;
+        gob5 = null;
+        // Wave 2
+        gob6 = null;
+        gob7 = null;
+        gob8 = null;
+        gob9 = null;
+        gob10 = null;
+        gob11 = null;
+        gob12 = null;
+        gob13 = null;
+        gob14 = null;
+        gob15 = null;
+        // Wave 3
+        troll1 = null;
+        troll2 = null;
+        troll3 = null;
+        stageComplete = true;
     }
 
     private void runGame(){
@@ -655,7 +749,7 @@ public class GameHelper {
     }
 
     public void kill(){
-        t.cancel();
+        endGame();
     }
 
     private boolean attack(FireTower tower, Goblin goblin){
@@ -673,20 +767,17 @@ public class GameHelper {
                         // Check Vertically
                         (gobY > centerY - tower.returnRange() &&
                                 gobY < centerY + tower.returnRange())) {
+            // goblin.setHP will return true if dead
             if(goblin.setHP(goblin.getHP() - 2)){
-                // Increase score
+                // Increase score and gold
                 gold+= 10;
                 score+= 50;
                 System.out.println("Added Score and Gold");
                 // Remove goblin from active goblins
                 goblinsActive.remove(goblin.getEnemyNumber());
-                // 0 means goblin is dead
+                // 0 means goblin is dead, setting goblin to dead
                 goblinsAlive[goblin.getEnemyNumber()-1] = 0;
-                // End Wave
-                System.out.println(goblinsActive.size());
-                System.out.println(goblinsActive.size() == 0);
-                System.out.println(trollsActive.size());
-                System.out.println(trollsActive.size() == 0);
+                // End Wave if no more goblins or trolls alive
                 if(goblinsActive.size() == 0 && trollsActive.size() == 0){
                     waveEnd();
                 }
@@ -697,7 +788,7 @@ public class GameHelper {
     }
 
     private boolean attack(FireTower tower, Troll troll){
-        // Goblin Coordinates Center
+        // Troll Coordinates Center
         float trollX = (troll.getX() + troll.getWidth()) / 2;
         float trollY = (troll.getY() + troll.getHeight()) / 2;
         // Tower Location Center
@@ -711,21 +802,17 @@ public class GameHelper {
                         // Check Vertically
                         (trollY > centerY - tower.returnRange() &&
                                 trollY < centerY + tower.returnRange())) {
-            System.out.println("HP: " + troll.getHP());
+            // troll.setHP will return true if dead
             if(troll.setHP(troll.getHP() - 2)){
-                // Increase score
+                // Increase score and gold
                 gold+= 25;
                 score+= 70;
                 System.out.println("Added Score and Gold");
-                // Remove goblin from active goblins
+                // Remove troll from active trolls
                 trollsActive.remove(troll.getEnemyNumber());
-                // 0 means goblin is dead
+                // 0 means troll is dead, setting troll to dead
                 trollsAlive[troll.getEnemyNumber()-1] = 0;
-                // End Wave
-                System.out.println(goblinsActive.size());
-                System.out.println(goblinsActive.size() == 0);
-                System.out.println(trollsActive.size());
-                System.out.println(trollsActive.size() == 0);
+                // End Wave if no more goblins or trolls alive
                 if(goblinsActive.size() == 0 && trollsActive.size() == 0){
                     waveEnd();
                 }

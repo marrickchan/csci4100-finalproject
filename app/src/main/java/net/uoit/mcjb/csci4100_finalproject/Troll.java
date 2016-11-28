@@ -26,7 +26,7 @@ public class Troll {
         // Set the image
         this.screen = screen;
         iv = new ImageView(context);
-        iv.setImageResource(R.drawable.pikachu);
+        iv.setImageResource(R.drawable.troll);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);

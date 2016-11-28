@@ -24,7 +24,7 @@ public class FireTower {
     public FireTower(float x, float y, ImageView towerSlot, RelativeLayout screen){
         this.x = x;
         this.y = y;
-        towerSlot.setImageResource(R.drawable.pikachu);
+        towerSlot.setImageResource(R.drawable.firetower);
         this.towerSlot = towerSlot;
         this.screen = screen;
     }

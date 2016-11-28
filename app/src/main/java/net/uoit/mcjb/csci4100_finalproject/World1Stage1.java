@@ -19,6 +19,8 @@ public class World1Stage1 extends AppCompatActivity {
     final private int CANNON_TOWER = 5007;
     final private int STAGE_CODE = 0101;
     private GameHelper w1s1Helper;
+    private Timer gameTimer = new Timer();
+    private int finalScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,24 @@ public class World1Stage1 extends AppCompatActivity {
         towers[7] = (ImageView)findViewById(R.id.w1s1Tower8);
 
         w1s1Helper = new GameHelper(this, rl, towers, STAGE_CODE);
+
+        gameTimer.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run(){
+                if(w1s1Helper.dead()){
+                    System.out.println("Closed Stage 1");
+                    // End timer
+                    gameTimer.cancel();
+
+                    // TODO:
+                    // Sheron to add scores into database
+                    finalScore = w1s1Helper.getFinalScore();
+
+                    Toast.makeText(getApplicationContext(), "Your final score: " + finalScore, Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        }, 0, 500);
     }
 
     public void onStop(){
