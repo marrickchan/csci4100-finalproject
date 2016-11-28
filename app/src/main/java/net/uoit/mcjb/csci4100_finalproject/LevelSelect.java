@@ -7,8 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class LevelSelect extends AppCompatActivity {
+import java.util.logging.Level;
 
+import static net.uoit.mcjb.csci4100_finalproject.MainActivity.EXTRA_SCORE;
+import static net.uoit.mcjb.csci4100_finalproject.MainActivity.SCORE_REQUEST;
+
+public class LevelSelect extends AppCompatActivity {
+    final static int LEVEL_SCORE_REQUEST = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +28,25 @@ public class LevelSelect extends AppCompatActivity {
         w1s1SelectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent w1s1 = new Intent(LevelSelect.this, World1Stage1.class);
-                startActivity(w1s1);
+
+                Intent startGameIntent = new Intent(LevelSelect.this, World1Stage1.class);
+                startActivityForResult(startGameIntent, LEVEL_SCORE_REQUEST);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LEVEL_SCORE_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                int score = data.getIntExtra(EXTRA_SCORE, 0);
+
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(EXTRA_SCORE, score);
+                setResult(Login.RESULT_OK, resultIntent);
+            }
+        }
+
     }
 }

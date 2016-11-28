@@ -1,5 +1,6 @@
 package net.uoit.mcjb.csci4100_finalproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static net.uoit.mcjb.csci4100_finalproject.MainActivity.EXTRA_SCORE;
 
 public class World1Stage1 extends AppCompatActivity {
     final private int CANCEL_TOWER = 9001;
@@ -56,6 +59,11 @@ public class World1Stage1 extends AppCompatActivity {
                     // TODO:
                     // Sheron to add scores into database
                     finalScore = w1s1Helper.getFinalScore();
+
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(EXTRA_SCORE, finalScore);
+                    setResult(World1Stage1.RESULT_OK, resultIntent);
+
                     finish();
                 }
             }

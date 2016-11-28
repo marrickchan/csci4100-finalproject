@@ -21,11 +21,9 @@ public class Signup extends AppCompatActivity {
     private Button signupButton;
     private EditText emailEditText;
     private EditText passwordEditText;
-    private TextView signinTextView;
     private EditText usernameEditText;
     private FirebaseAuth firebaseAuth;
-
-    private ProgressDialog progressDialog;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +31,6 @@ public class Signup extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if (firebaseAuth.getCurrentUser() != null) {
-            finish();
-        }
 
         //TODO: return username on result to store in firebase database
         usernameEditText = (EditText) findViewById(R.id.username_SignupScreen);
@@ -48,25 +43,16 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerUser();
-                finish();
+             //   finish();
             }
         });
-
-        /*
-        signinTextView = (TextView) findViewById(R.id.textViewSignin);
-        signinTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(Signup.this, Login.class));
-            }
-        }); */
     }
 
     private void registerUser() {
         String username = usernameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
+
 
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Please enter a username", Toast.LENGTH_SHORT).show();
@@ -90,6 +76,8 @@ public class Signup extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
+
                         if (task.isSuccessful()) {
                             finish();
                             Toast.makeText(Signup.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
@@ -97,7 +85,7 @@ public class Signup extends AppCompatActivity {
                         } else {
                             Toast.makeText(Signup.this, "Could not register. Please try again.", Toast.LENGTH_SHORT).show();
                         }
-                        progressDialog.dismiss();
+
                     }
                 });
     }

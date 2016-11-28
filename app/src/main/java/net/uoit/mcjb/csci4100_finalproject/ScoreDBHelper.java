@@ -48,7 +48,6 @@ public class ScoreDBHelper extends SQLiteOpenHelper {
         ArrayList<Score> allScores = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Score score;
-        //      Log.d("DB", "Count: " + res.getCount());
 
         try {
             Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
@@ -68,6 +67,7 @@ public class ScoreDBHelper extends SQLiteOpenHelper {
 
         return allScores;
     }
+
 
     // Delete score by name
     public Integer deleteScore(String playerName) {

@@ -23,9 +23,9 @@ public class HighScoresFragment extends ListFragment {
         scores = db.getAllScores();
 
         // TODO: Need to change to pull from db once scores added after game
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             //name is currently primary key
-            scores.add(new Score("John Smith" + i, 34354));
+            scores.add(new Score("Empty", 0));
             db.addScore(scores.get(i));
         }
 

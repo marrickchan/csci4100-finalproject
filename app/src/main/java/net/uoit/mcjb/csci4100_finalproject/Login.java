@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void userLogin() {
-        String email = emailEditText.getText().toString().trim();
+        final String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
@@ -84,7 +84,7 @@ public class Login extends AppCompatActivity {
                         if(task.isSuccessful()) {
 
                             Intent resultIntent = new Intent();
-                            resultIntent.putExtra(EXTRA_USERNAME, "Joe");
+                            resultIntent.putExtra(EXTRA_USERNAME, email);
                             setResult(Login.RESULT_OK, resultIntent);
                             finish();
                             msg = "Logged in successfully";

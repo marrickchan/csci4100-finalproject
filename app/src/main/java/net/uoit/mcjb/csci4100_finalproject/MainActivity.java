@@ -1,5 +1,6 @@
 package net.uoit.mcjb.csci4100_finalproject;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
     final static String LOGIN_CONSTANT = "Login";
     final static String LOGGED_OUT_STATUS_CONSTANT = "Please log in.";
     final static int USERNAME_REQUEST = 1;
-    final static String EXTRA_USERNAME = "a100504990.logintime.username";
+    final static int SCORE_REQUEST = 2;
+    final static String EXTRA_USERNAME = "net.uoit.mcjb.csci4100_finalproject.username";
+    final static String EXTRA_SCORE = "net.uoit.mcjb.csci4100_finalproject.score";
     final static String USERNAME_OUT_FILE = "username.out";
-
 
     private FirebaseAuth firebaseAuth;
     private TextView textViewUserEmail;
@@ -34,16 +37,22 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextName, editTextAddress;
     private Button buttonSave;
 
+
     TextView status;
     Button logButton;
     File file;
     Boolean loggedIn = false;
+    Boolean highScoreEmpty = true;
+    String username = "Anonymous";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading The Tower Defense...");
+        progressDialog.show();
         // Get Buttons
         Button startGameButton = (Button) findViewById(R.id.startGame_MainScreen);
         Button instructionsButton = (Button) findViewById(R.id.instruction_MainScreen);
@@ -77,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //if (loggedIn) {
                     Intent startGameIntent = new Intent(MainActivity.this, LevelSelect.class);
-                    startActivity(startGameIntent);
+                    startActivityForResult(startGameIntent, SCORE_REQUEST);
+                    setLogin(username);
                 //} else {
                 //    Toast.makeText(getApplicationContext(), "Must be logged in to play.", Toast.LENGTH_LONG).show();
 
@@ -113,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
                 System.exit(0);
             }
         });
+
+        progressDialog.dismiss();
     }
 
     // Get username from Login activity and write to file
@@ -121,10 +133,26 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == USERNAME_REQUEST) {
             if (resultCode == RESULT_OK) {
-                String username = data.getStringExtra(EXTRA_USERNAME);
+                username = data.getStringExtra(EXTRA_USERNAME);
                 setLogin(username);
                 writeToFile(username);
-           //     saveUserInformation(username, 0);
+                //   saveUserInformation(username, 0);
+            }
+        } else if (requestCode == SCORE_REQUEST) {
+            if (resultCode == RESULT_OK) {
+
+
+
+
+                long userScore = data.getIntExtra(EXTRA_SCORE, 0);
+                Score score = new Score(username, userScore);
+                ScoreDBHelper db = new ScoreDBHelper(this);
+
+                if (highScoreEmpty) {
+                    db.deleteScore("Empty");
+                    db.addScore(score);
+                }
+
             }
         }
     }
@@ -148,13 +176,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void readFileIntoStatus() {
+    public String readFile() {
         file = new File(this.getFilesDir(), USERNAME_OUT_FILE);
-        String username;
+        String username = "";
         try {
             Scanner scanner = new Scanner(file);
             if (scanner.hasNextLine()) {
                 username = scanner.nextLine();
+            }
+
+            scanner.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return username;
+    }
+
+    public void readFileIntoStatus() {
+        String username = readFile();
+        try {
+            Scanner scanner = new Scanner(file);
+            if (username.equals("")) {
                 setLogin(username);
             }
 
@@ -171,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setLogout() {
         loggedIn = false;
+        FirebaseAuth.getInstance().signOut();
         setStatus(LOGIN_CONSTANT, LOGGED_OUT_STATUS_CONSTANT);
     }
     public void setStatus(String logType, String mainStatus) {
