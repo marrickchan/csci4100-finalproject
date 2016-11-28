@@ -18,37 +18,14 @@
 
     <!-- Instructions Screen -->
     <string name="instructionsTitle">Instructions</string>
-    <string name="instructionsContent">
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
-        Here are the instructions... Soon to come with pictures and such
+    <string name="instructionsContent">The game has 2 stages.\n
+        Each stage will have spots to place fire towers to fight the enemies.\n
+        Each fire tower will cost 100 gold.\n
+        You earn gold every time a tower takes out an enemy.\n
+        The enemies will come in three waves with 5 seconds in between each wave.\n
+        The game will end once all the enemies are defeated or a certain number of enemies get past your towers.\n
+        Players have 10 lives in each stage.\n
+        If 10 enemies survive and get passed your towers, you lose the game.\n
     </string>
     <string name="back_InstructionsScreen">Back</string>
 

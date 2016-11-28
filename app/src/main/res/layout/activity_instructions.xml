@@ -49,11 +49,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/instructions_InstructionsScreen"
-                android:text="@string/instructionsContent"/>
-
+                android:text="@string/instructionsContent"
+                android:textAlignment="center"
+                android:textSize="18sp"/>
         </RelativeLayout>
     </ScrollView>
-    
-
 </RelativeLayout>
 
