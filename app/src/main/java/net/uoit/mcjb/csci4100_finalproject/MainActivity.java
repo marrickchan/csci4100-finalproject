@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loggedIn) {
+                //if (loggedIn) {
                     Intent startGameIntent = new Intent(MainActivity.this, LevelSelect.class);
                     startActivity(startGameIntent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Must be logged in to play.", Toast.LENGTH_LONG).show();
+                //} else {
+                //    Toast.makeText(getApplicationContext(), "Must be logged in to play.", Toast.LENGTH_LONG).show();
 
-                }
+                //}
             }
         });
 
