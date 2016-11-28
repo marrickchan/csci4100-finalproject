@@ -60,4 +60,8 @@
 
     <!-- Game Screens -->
     <string name="startRound">Start Round</string>
+    <string name="buildFireTower">Building Fire Tower</string>
+    <string name="buildFireTowerBody">Would you like to build a Fire Tower? It costs 100 gold.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

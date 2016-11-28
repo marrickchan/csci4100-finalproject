@@ -1,7 +1,10 @@
 package net.uoit.mcjb.csci4100_finalproject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.View;
@@ -40,6 +43,12 @@ public class GameHelper {
     private int score = 0;
     private int lives = 10;
     private int gold = 250;
+    // Sound resources
+    MediaPlayer fireballSound;
+    MediaPlayer goblinSpawnSound;
+    MediaPlayer goblinDeathSound;
+    MediaPlayer trollSpawnSound;
+    MediaPlayer trollDeathSound;
 
     // Monsters
     // Goblin Wave 1
@@ -68,8 +77,6 @@ public class GameHelper {
     private FireTower fireTowers[] = new FireTower[8];
     private boolean towerBuilt[] = new boolean[8];
     private Timer towerTimer[] = new Timer[8];
-    // Helper For Listener
-    private int currentTowerListenerHelper = 0;
 
     // Wave Management
     private Map<Integer, Goblin> goblinsActive = new HashMap<Integer, Goblin>();
@@ -88,6 +95,15 @@ public class GameHelper {
         this.towers = towers;
         this.context = context;
         this.STAGE_CODE = STAGE_CODE;
+
+        // Sound resources
+        fireballSound = MediaPlayer.create(context, R.raw.fireball);
+        // TODO:
+        // Change these to the right sounds
+        goblinSpawnSound = MediaPlayer.create(context, R.raw.fireball);
+        goblinDeathSound = MediaPlayer.create(context, R.raw.fireball);
+        trollSpawnSound = MediaPlayer.create(context, R.raw.fireball);
+        trollDeathSound = MediaPlayer.create(context, R.raw.fireball);
 
         // Initialize Information Bar
         infoBar = (TextView)screen.findViewById(R.id.infoBar);
@@ -430,7 +446,6 @@ public class GameHelper {
             @Override
             public void onClick(View v) {
                 if(!towerBuilt[7]){
-                    towerBuilt[7] = true;
                     // Build the tower
                     if( gold >= 100 ){
                         // Tower is built, start timer for the attack on that tower
@@ -498,8 +513,27 @@ public class GameHelper {
         });
     }
 
-    private void chooseTower(){
+    private void buildFireTower(final int towerNumber){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(R.string.buildFireTowerBody)
+                .setTitle(R.string.buildFireTower);
 
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+            public void  onClick(DialogInterface dialog, int id){
+                if( gold >= 100 ) {
+                    // Tower is built, start timer for the attack on that tower
+                    gold -= 100;
+                    towerBuilt[towerNumber] = true;
+                }
+            }
+        });
+
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener(){
+            public void  onClick(DialogInterface dialog, int id){
+
+            }
+        });
+        AlertDialog buildFireTowerDialog = builder.create();
     }
 
     private boolean checkLives(){
@@ -648,13 +682,12 @@ public class GameHelper {
     }
 
     private void attackSound(){
-        MediaPlayer mp = MediaPlayer.create(context, R.raw.fireball);
-        mp.start();
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        fireballSound.start();
+        fireballSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
+            public void onCompletion(MediaPlayer fireballSound) {
+                fireballSound.release();
             }
 
         });
