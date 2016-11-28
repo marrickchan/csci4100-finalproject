@@ -48,6 +48,7 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerUser();
+                finish();
             }
         });
 

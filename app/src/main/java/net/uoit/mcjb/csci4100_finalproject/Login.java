@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static net.uoit.mcjb.csci4100_finalproject.MainActivity.EXTRA_USERNAME;
+
 public class Login extends AppCompatActivity {
     private Button loginButton;
     private EditText emailEditText;
@@ -31,10 +33,6 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
-        if (firebaseAuth.getCurrentUser() != null) {
-            finish();
-        }
 
         emailEditText = (EditText) findViewById(R.id.email_LoginScreen);
         passwordEditText = (EditText) findViewById(R.id.password_LoginScreen);
@@ -73,7 +71,7 @@ public class Login extends AppCompatActivity {
             return;
         }
 
-        progressDialog.setMessage("Registering User...");
+        progressDialog.setMessage("Logging in User...");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -82,9 +80,16 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
 
+                        String msg = "Incorrect email/password";
                         if(task.isSuccessful()) {
+
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra(EXTRA_USERNAME, "Joe");
+                            setResult(Login.RESULT_OK, resultIntent);
                             finish();
+                            msg = "Logged in successfully";
                         }
+                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                     }
                 });
     }

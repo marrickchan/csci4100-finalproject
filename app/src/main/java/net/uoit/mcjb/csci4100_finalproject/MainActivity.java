@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 String username = data.getStringExtra(EXTRA_USERNAME);
                 setLogin(username);
                 writeToFile(username);
-
+           //     saveUserInformation(username, 0);
             }
         }
     }
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         if (user != null) {
-            databaseReference.child(user.getUid()).setValue(user);
+            databaseReference.child(user.getUid()).setValue(score);
         }
         Toast.makeText(this, "Information Saved to firebase", Toast.LENGTH_LONG).show();
 
