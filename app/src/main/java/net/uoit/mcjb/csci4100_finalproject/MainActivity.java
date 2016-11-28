@@ -160,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
         loggedIn = false;
         setStatus(LOGIN_CONSTANT, LOGGED_OUT_STATUS_CONSTANT);
     }
-    public void setStatus(String button, String mainStatus) {
+    public void setStatus(String logType, String mainStatus) {
         status.setText(mainStatus);
-        logButton.setText(LOGOUT_CONSTANT);
+        logButton.setText(logType);
     }
 }
