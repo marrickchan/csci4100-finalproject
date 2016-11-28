@@ -31,12 +31,9 @@ public class Signup extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-<<<<<<< HEAD
-=======
-        if (firebaseAuth.getCurrentUser() == null) {
+        if (firebaseAuth.getCurrentUser() != null) {
             finish();
         }
->>>>>>> 1b5fafdfed51aa0baaac4978fab6d0cca1cc20cd
 
         //TODO: return username on result to store in firebase database
         usernameEditText = (EditText) findViewById(R.id.username_SignupScreen);
@@ -49,10 +46,7 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerUser();
-<<<<<<< HEAD
              //   finish();
-=======
->>>>>>> 1b5fafdfed51aa0baaac4978fab6d0cca1cc20cd
             }
         });
     }

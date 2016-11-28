@@ -96,8 +96,6 @@ public class GameHelper {
         this.context = context;
         this.STAGE_CODE = STAGE_CODE;
 
-        // Sound resources
-        fireballSound = MediaPlayer.create(context, R.raw.fireball);
         // TODO:
         // Change these to the right sounds
         goblinSpawnSound = MediaPlayer.create(context, R.raw.fireball);
@@ -513,6 +511,7 @@ public class GameHelper {
         });
     }
 
+    /*
     private void buildFireTower(final int towerNumber){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(R.string.buildFireTowerBody)
@@ -534,7 +533,7 @@ public class GameHelper {
             }
         });
         AlertDialog buildFireTowerDialog = builder.create();
-    }
+    }*/
 
     private boolean checkLives(){
         if(lives <= 0){
@@ -682,6 +681,7 @@ public class GameHelper {
     }
 
     private void attackSound(){
+        fireballSound = MediaPlayer.create(context, R.raw.fireball);
         fireballSound.start();
         fireballSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
