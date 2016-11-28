@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_login"
+    android:id="@+id/activity_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="net.uoit.mcjb.csci4100_finalproject.Login">
+    tools:context="net.uoit.mcjb.csci4100_finalproject.Signup">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,15 +19,23 @@
 
         <EditText
             android:layout_margin="15dp"
-            android:id="@+id/email_LoginScreen"
-            android:hint="Enter your email"
+            android:id="@+id/username_SignupScreen"
+            android:hint="Enter a username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+            android:inputType="text"/>
 
         <EditText
             android:layout_margin="15dp"
-            android:id="@+id/password_LoginScreen"
+            android:id="@+id/email_SignupScreen"
+            android:hint="Enter your email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:layout_margin="15dp"
+            android:id="@+id/password_SignupScreen"
             android:hint="Enter your password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,15 +43,15 @@
 
         <Button
             android:layout_margin="15dp"
-            android:id="@+id/loginButton_LoginScreen"
-            android:text="Login"
+            android:id="@+id/signupButton_SignupScreen"
+            android:text="Register User"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:textAlignment="center"
-            android:text="Not registered? Sign up here"
-            android:id="@+id/signup_LoginScreen"
+            android:text="Already Registerd? Sign in here"
+            android:id="@+id/textViewSignin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

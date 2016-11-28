@@ -5,9 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +25,14 @@ public class MainActivity extends AppCompatActivity {
     final static int USERNAME_REQUEST = 1;
     final static String EXTRA_USERNAME = "a100504990.logintime.username";
     final static String USERNAME_OUT_FILE = "username.out";
+
+
+    private FirebaseAuth firebaseAuth;
+    private TextView textViewUserEmail;
+    private Button buttonLogout;
+    private DatabaseReference databaseReference;
+    private EditText editTextName, editTextAddress;
+    private Button buttonSave;
 
     TextView status;
     Button logButton;
@@ -163,5 +176,19 @@ public class MainActivity extends AppCompatActivity {
     public void setStatus(String logType, String mainStatus) {
         status.setText(mainStatus);
         logButton.setText(logType);
+    }
+
+    // Save to firebase database
+    private void saveUserInformation(String name, long highScore) {
+
+        Score score = new Score(name, highScore);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        if (user != null) {
+            databaseReference.child(user.getUid()).setValue(user);
+        }
+        Toast.makeText(this, "Information Saved to firebase", Toast.LENGTH_LONG).show();
+
     }
 }
