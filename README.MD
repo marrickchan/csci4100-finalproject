@@ -6,7 +6,7 @@ For our final project for Mobile Devices, we will be creating a Tower Defense Ga
 
 ***
 
-> Created by Marrick Chan & Sheron Balasingam
+> Created by Marrick Chan
 
 > For CSCI 4100 Mobile Devices
 
